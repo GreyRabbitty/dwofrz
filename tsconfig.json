@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true
+  },
+  "include": [
+    "components/Pandora/CustomTitle.jsx",
+    "pages/api/pandora/pandora_apis.jsx",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/_app.tsx",
+    "components/method/action.js",
+    "pages/connect.jsx",
+    "pages/api/program/sol/send_list.js",
+    "pages/api/program/eth/send_accept.js",
+    "pages/api/pandora/pandora_calls.jsx"
+, "components/programs/solana/pandora/calls.js"  ],
+  "exclude": ["node_modules"]
+}

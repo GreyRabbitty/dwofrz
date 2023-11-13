@@ -1,0 +1,578 @@
+{
+  "version": "0.1.0",
+  "name": "pandora_lottery",
+  "instructions": [
+    {
+      "name": "initilizeClaim",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "claimer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pandora",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initilizeWinnerStorege",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "winnersStorage",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pandora",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim",
+      "accounts": [
+        {
+          "name": "pda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "from",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "claimer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pandora",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "to",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "setupPandora",
+      "accounts": [
+        {
+          "name": "storage",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pandora",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "collectionLimit",
+          "type": "u64"
+        },
+        {
+          "name": "collectionName",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "u64"
+        },
+        {
+          "name": "candyMachine",
+          "type": "publicKey"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "editPrice",
+      "accounts": [
+        {
+          "name": "pandora",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pandoraOwner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "price",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "closePandora",
+      "accounts": [
+        {
+          "name": "pandora",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pandoraOwner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "openPandora",
+      "accounts": [
+        {
+          "name": "pandora",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pandoraOwner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "revealTime",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "mintBoxes",
+      "accounts": [
+        {
+          "name": "signerr",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "pda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "claimer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pandora",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pandoraBox",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pandoraBox2",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "receiverAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "recentBlockhashes",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "storage",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "price",
+          "type": "u32"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "selectWinners",
+      "accounts": [
+        {
+          "name": "pandora",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "storage",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "pandoraOwner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "reveal",
+      "accounts": [
+        {
+          "name": "pandora",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userWallet",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "userTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "escrowTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "boxe",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "escrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "PandoraBox",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "isBox",
+            "type": "bool"
+          },
+          {
+            "name": "userWallet",
+            "type": "publicKey"
+          },
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "outcome",
+            "type": "u32"
+          },
+          {
+            "name": "win",
+            "type": "bool"
+          },
+          {
+            "name": "revealed",
+            "type": "bool"
+          },
+          {
+            "name": "revealTime",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Pandora",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "boxesMinted",
+            "type": "u64"
+          },
+          {
+            "name": "candyMachine",
+            "type": "publicKey"
+          },
+          {
+            "name": "minting",
+            "type": "bool"
+          },
+          {
+            "name": "pandoraOwner",
+            "type": "publicKey"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "collectionLimit",
+            "type": "u64"
+          },
+          {
+            "name": "collectionName",
+            "type": "string"
+          },
+          {
+            "name": "revealTime",
+            "type": "u64"
+          },
+          {
+            "name": "tokenAccount",
+            "type": "publicKey"
+          },
+          {
+            "name": "storage",
+            "type": "publicKey"
+          },
+          {
+            "name": "winningStorage",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Claimer",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "publicKey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "state",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Storage",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "total",
+            "type": "u64"
+          },
+          {
+            "name": "max",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WinnerStorage",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "max",
+            "type": "u64"
+          },
+          {
+            "name": "pandora",
+            "type": "publicKey"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "NotEnoughFunds",
+      "msg": "Not Enough Funds in balance"
+    },
+    {
+      "code": 6001,
+      "name": "MintPriceTooLow",
+      "msg": "Mint Price lower than Pandoras Set Price"
+    },
+    {
+      "code": 6002,
+      "name": "NoBoxesFoundForUser",
+      "msg": "No Boxes were found for user"
+    },
+    {
+      "code": 6003,
+      "name": "RevealTooEarly",
+      "msg": "Drawing has not occured yet"
+    },
+    {
+      "code": 6004,
+      "name": "OutOfNFTs",
+      "msg": "Collection is sold out, hope you got in."
+    },
+    {
+      "code": 6005,
+      "name": "NotPandoraOwner",
+      "msg": "You do not own this Pandora, cheeky boy"
+    },
+    {
+      "code": 6006,
+      "name": "PandoraNotOpen",
+      "msg": "Pandora Box not open for minting"
+    },
+    {
+      "code": 6007,
+      "name": "PandoraAlreadyOpened",
+      "msg": "Can not open a Box thats already open"
+    },
+    {
+      "code": 6008,
+      "name": "WrongOutcome",
+      "msg": "Wrong outcome, try again"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidCalculation",
+      "msg": "Invalide calculation!"
+    }
+  ],
+  "metadata": {
+    "address": "6a5yq8MBcizhoqEv1GSJzNHfc7XYPNMN3wzrHd9nBEPU"
+  }
+}
