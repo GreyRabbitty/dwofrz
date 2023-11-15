@@ -12,6 +12,9 @@ export default async function handler(req, res) {
       database: req.query.database,
       collection: req.query.collection,
     };
+
+    console.log('fetchBody ===> ', fetchBody);
+    
     const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;
 
     try {
@@ -27,6 +30,7 @@ export default async function handler(req, res) {
             }),
           });
           const readDataJson = await readData.json();
+          console.log('readDataJson ===> ', readDataJson);
           res.status(200).json(readDataJson.document);
           break;
         default:

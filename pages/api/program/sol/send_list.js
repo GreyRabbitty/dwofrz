@@ -1,5 +1,10 @@
 import { web3 } from '@project-serum/anchor';
 import { getToken } from "next-auth/jwt";
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
+
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.Promise = global.Promise;
 
 export default async function handle(req, res) {
 
@@ -17,6 +22,8 @@ export default async function handle(req, res) {
         })
       }
 
+      console.log('token =====> ', token);
+
         const fetchOptions = {
             method: "POST",
             headers: {
@@ -26,72 +33,74 @@ export default async function handle(req, res) {
             },
           };
 
-          const fetchBody = {
-            dataSource: process.env.MONGODB_DATA_SOURCE,
-            database: "user",
-            collection: req.body.user
-          };
+        const fetchBody = {
+          dataSource: process.env.MONGODB_DATA_SOURCE,
+          database: "user",
+          collection: req.body.user
+        };
 
-          const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;
+        console.log('fetchBody ===> ', fetchBody);
+
+        const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;
+
+        console.log('baseUrl ===> ', baseUrl);
 
         // await new Promise(f => setTimeout(f, 10000))
 
 
-        const serialized = req.body.serializing_tx;
+        // const serialized = req.body.serializing_tx;
 
-        const buffer_tx = Buffer.from(serialized, 'base64');
+        // const buffer_tx = Buffer.from(serialized, 'base64');
 
-        const txv = web3.Transaction.from(buffer_tx);
+        // const txv = web3.Transaction.from(buffer_tx);
 
 
         // return res.status(500).json("wow")
-        const rpc = process.env.RPC
-        const connection = new web3.Connection(rpc, {
-          confirmTransactionInitialTimeout: 2147483647
-        });
+        // const rpc = process.env.RPC
+        // const connection = new web3.Connection(rpc, {
+        //   confirmTransactionInitialTimeout: 2147483647
+        // });
 
-        const hash = await connection.sendRawTransaction(
-            buffer_tx,
-            {
-                skipPreflight: true
-            }
-        )
-        const confirmation = await connection.confirmTransaction(hash, "confirmed");
-
-
-
-        if (confirmation.value.err) {
-            res.status(500).json({
-              status: "ERR",
-              message: confirmation.value.err
-            })
-        }
-        else {
+        // const hash = await connection.sendRawTransaction(
+        //     buffer_tx,
+        //     {
+        //         skipPreflight: true
+        //     }
+        // )
+        // const confirmation = await connection.confirmTransaction(hash, "confirmed");
 
 
 
+        // if (confirmation.value.err) {
+        //     res.status(500).json({
+        //       status: "ERR",
+        //       message: confirmation.value.err
+        //     })
+        // }
+        // else {
             const data = req.body.data;
 
 
             // update the project image here
-            // const user_info = await fetch(`${baseUrl}/findOne`, {
-            //   ...fetchOptions,
-            //   body: JSON.stringify({
-            //     ...fetchBody,
-            //     filter: {
-            //       address: req.body.user,
-            //     }
-            //   }),
-            // });
-            // const readUserInfo = (await user_info.json()).document;
+            const user_info = await fetch(`${baseUrl}/findOne`, {
+              ...fetchOptions,
+              body: JSON.stringify({
+                ...fetchBody,
+                // filter: {
+                //   address: req.body.user,
+                // }
+              }),
+            });
+            const readUserInfo = (await user_info.json()).document;
+            console.log('user_info ====> ', readUserInfo)
 
-            // if (readUserInfo) {
-            //   data.project_image = readUserInfo.pfp;
-            // }
-            // else {
-            //   // default image of dworfz;
-            //   data.project_image = token ? token.picture : "https://cdn.discordapp.com/attachments/1030474275662082098/1080214478546804810/Dworfz_Sneak_peek_twtr.png"
-            // }
+            if (readUserInfo) {
+              data.project_image = readUserInfo.pfp;
+            }
+            else {
+              // default image of dworfz;
+              data.project_image = token ? token.picture : "https://cdn.discordapp.com/attachments/1030474275662082098/1080214478546804810/Dworfz_Sneak_peek_twtr.png"
+            }
 
             data.twitter_profile = token.picture;
             data.twitter_handler = token.name;
@@ -109,6 +118,7 @@ export default async function handle(req, res) {
             });
 
             const insertDataJson_user = await insertData_user.json();
+            console.log('insertDataJson_user ===> ', insertDataJson_user);
             data.user_id = insertDataJson_user.insertedId
 
             // insert the data
@@ -127,13 +137,13 @@ export default async function handle(req, res) {
 
             res.status(200).json({
               status: "OK",
-                hash: hash,
+                // hash: hash,
                 insertData: insertDataJson,
                 insertDataJson_user: insertDataJson_user
                 // updateData: updateDataJson
             })
         }
-    }
+    // }
     catch(e) {
       console.log(e)
       res.status(500).json({

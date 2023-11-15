@@ -5,6 +5,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Homepage from "../components/home/Homepage";
+import Tasks from "../components/conferm/tasks";
 
 import { signIn, signOut, useSession, } from 'next-auth/client';
  
@@ -34,6 +35,7 @@ const Home: NextPage = () => {
 
       <Container className="max-w-screen-xl pb-10">
         <Homepage />
+        {/* <Tasks /> */}
       </Container>
       {/* {!session && <>
         Not signed in <br/>

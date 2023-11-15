@@ -60,9 +60,9 @@ export async function list(
     const PROGRAM_ID = new web3.PublicKey(idl.metadata.address)
     const program = new Program(idl, idl.metadata.address, provider);
 
-      console.log(PROGRAM_ID.toBase58());
+      console.log('PROGRAM_ID ====> ', PROGRAM_ID.toBase58());
 
-  
+      console.log('program ====> ', program);
 
       const [escrow, escrow_bump] = web3.PublicKey.findProgramAddressSync(
         [
@@ -77,7 +77,7 @@ export async function list(
         PROGRAM_ID
       );
       let index = 0;
-      console.log("6666666666666666666")
+      
       console.log(counter.toBase58(), "Counter _++++")
       console.log(escrow.toBase58(), "Escrow _++++")
 
@@ -86,10 +86,6 @@ export async function list(
          console.log(account, "--------------------------------")
          index = Number(account.indexCounter) + 1;
       } catch(e) {
-        console.log("HERERERERE")
-        console.log(counter.toBase58(), "Counter ")
-        console.log(anchorWallet.publicKey.toBase58(), "Counter ")
-        console.log(web3.SystemProgram.programId.toBase58(), "Counter ")
 
         const transaction = await program.methods.initCounter().accounts({
             counter: counter,
@@ -101,6 +97,8 @@ export async function list(
         })
         console.log("THERERE")
       }
+
+      console.log("--------------------------------")
       let abbathor_ata;
       let abbathor_metadata;
       let abbathor_masteredtion;  
@@ -136,7 +134,6 @@ export async function list(
     let initilized;
     let nft_metadata;
     let master_edition;
-    console.log("99999999999999999999999999999999")
 
     if (token != "solana") {
         // [user_ata] = await web3.PublicKey.findProgramAddress(
@@ -180,9 +177,9 @@ export async function list(
                 )
             );
             const signature = await wallet.sendTransaction(ataTransaction, connection)
-            console.log("1111111111111111111111111")
+            
             await connection.confirmTransaction(signature, "finalized");
-            console.log("222222222222222222222222")
+            
             
         }
 
@@ -201,9 +198,10 @@ export async function list(
         master_edition = new web3.PublicKey("GzUr1mNWRFdcpJcVcRSLKs5z4qtvvrQ5t33oqW86M2ZY");
     }
 
-    if (token == "solana") {
-        amount = amount * 1000000000;
-    }
+    //Changed
+    // if (token == "solana") {
+    //     amount = amount * 1000000000;
+    // }
 
     let payment = 0;
 
@@ -267,6 +265,7 @@ export async function list(
       supply = 0;
     }
     
+    console.log('transaction before ===========> ')
 
     const transaction = await program.methods.initializeListing(
         new BN(index),

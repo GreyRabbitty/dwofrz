@@ -86,10 +86,10 @@ export default function Homepage() {
 
   return (
     <div>
-      {/* {featured_tweets && <Featured tweets={featured_tweets} />}
-      {hot_tweets && <Hot tweets={hot_tweets} />} */}
-      {/* {tweets && <Tweets tweets={tweets} />}
-      <Games /> */}
+      {featured_tweets && <Featured tweets={featured_tweets} />}
+      {hot_tweets && <Hot tweets={hot_tweets} />}
+      {tweets && <Tweets tweets={tweets} />}
+      <Games />
       <Gamestasks />
     </div>
   );

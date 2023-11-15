@@ -183,12 +183,6 @@ export default function Formeone() {
 
   // solana functions!
   async function apply() {
-    console.log('apply =================> ');
-    console.log('AnchorWallet =================> ', AnchorWallet.publicKey.toBase58());
-    console.log('twitter_id =================> ', twitter_id);
-    console.log('name =================> ', name);
-    console.log('project_image =================> ', project_image);
-    console.log('twitter_url =================> ', twitter_url);
     if (!AnchorWallet) return;
     if (
       !twitter_id ||
@@ -220,14 +214,15 @@ export default function Formeone() {
       // https:ragnarok.dworfz/apply?user=address
       console.log('router.query ===========>', router);
       console.log('router.query.user ===========>', router.query.user);
-      if (router.query.user) {
-        affiliat_address = new web3.PublicKey(router.query.user);
-        console.log('affiliat_address ===========>', affiliat_address);
-        if (!web3.PublicKey.isOnCurve(affiliat_address)) {
-          return notify_error("Invalid solana address in the affiliate link");
-        }
-        affilate = true;
-      }
+      // if (router.query.user) {
+      //   affiliat_address = new web3.PublicKey(router.query.user);
+      //   console.log('affiliat_address ===========>', affiliat_address);
+      //   if (!web3.PublicKey.isOnCurve(affiliat_address)) {
+      //     return notify_error("Invalid solana address in the affiliate link");
+      //   }
+      //   affilate = true;
+      // }
+      affilate = true;
     } catch (e) {
       return notify_error("Invalid solana address in the affiliate link");
     }
@@ -236,6 +231,8 @@ export default function Formeone() {
     if (!session) {
       return notify_warning("connect your twitter first!");
     }
+
+    console.log('session ==> ', session);
 
     let mint;
     let programable_config = null;
@@ -261,7 +258,7 @@ export default function Formeone() {
           nft_res.creators[0] &&
           nft_res.creators[0].address &&
           nft_res.creators[0].address.toBase58() ==
-            "7Pz5yfA3iQqQik39azMcw1ND9vBUF54MCNb4yBPTkTAD"
+            "7Pz5yfA3iQqQik39azMcw1ND9vBUF54MCNb4yBPTkTAD" //address?????
         ) {
           holder = true;
           abbaothor_mint = nft_res.mintAddress.toBase58();
@@ -294,7 +291,7 @@ export default function Formeone() {
         connection,
         token,
         server_id,
-        nft,
+        nft, 
         project_image,
         holder,
         abbaothor_mint,
@@ -303,6 +300,35 @@ export default function Formeone() {
         claim,
         programable_config
       );
+      console.log('================ S T A R T ==================>')
+
+      // console.log('AnchorWallet = =========>  ',AnchorWallet.publicKey.toBase58(),)
+      //   console.log('twitter_id = =========>  ',twitter_id,)
+      //   console.log('handle_name = =========>  ',handle_name,)
+      //   console.log('discord_constact = =========>  ',discord_constact,)
+      //   console.log('discord_url = =========>  ',discord_url,)
+      //   console.log('twitter_url = =========>  ',twitter_url,)
+      //   console.log('chain = =========>  ',chain,)
+      //   console.log('mint = =========>  ',mint,)
+      //   console.log('bundle = =========>  ', bundle,)
+      //   console.log('discription = =========>  ',discription,)
+      //   console.log('featured = =========>  ',featured,)
+      //   console.log('amoun = =========>  ',amount,)
+      //   console.log('native_coin = =========>  ',native_coin,)
+      //   console.log('wallet = =========>  ',wallet.publicKey.toBase58(),)
+      //   console.log('connection = =========>  ',connection,)
+      //   console.log('token = =========>  ',token,)
+      //   console.log('server_id = =========>  ',server_id,)
+      //   console.log('nft = =========>  ', nft, )
+      //   console.log('project_image = =========>  ',project_image,)
+      //   console.log('holder = =========>  ',holder,)
+      //   console.log('abbaothor_mint = =========>  ',abbaothor_mint,)
+      //   console.log('affilate = =========>  ',affilate,)
+      //   console.log('affiliat_address = =========>  ',affiliat_address,)
+      //   console.log('claim = =========>  ',claim,)
+      //   console.log('programable_config = =========>  ',programable_config)
+
+      console.log('================ E N D ==================>')
       notify_delete();
       notify_success("transaction successful");
       reload_data();

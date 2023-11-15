@@ -29,47 +29,44 @@ export async function submit(
     supply: number,
     programable_config: any
 ) {
-    console.log("7777777777777777777777777")
 
 
-    const [tx, index] = await list(
-        anchorwallet,
-        amount,
-        sol,
-        bundle,
-        mint,
-        wallet,
-        connection,
-        token,
-        holder,
-        abbathor_mint,
-        affilate,
-        affiliat_address,
-        featured_tweet, 
-        supply,
-        programable_config
-    );
-    console.log("888888888888888888888888888")
+    // const [tx, index] = await list(
+    //     anchorwallet,
+    //     amount,
+    //     sol,
+    //     bundle,
+    //     mint,
+    //     wallet,
+    //     connection,
+    //     token,
+    //     holder,
+    //     abbathor_mint,
+    //     affilate,
+    //     affiliat_address,
+    //     featured_tweet, 
+    //     supply,
+    //     programable_config
+    // );
+    console.log("list ended")
 
         // const serializedTx = Buffer.from(tx.serialize, 'base64');
         // const txv = web3.Transaction.from(serializedTx);
         // sign the transaction
-        let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
-        tx.recentBlockhash = blockhash;
-        tx.feePayer = new web3.PublicKey(anchorwallet.publicKey);
-    console.log("9999999999999999999999999999")
+        // let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
+        // tx.recentBlockhash = blockhash;
+        // tx.feePayer = new web3.PublicKey(anchorwallet.publicKey);
 
-        const signed_tx = await wallet.signTransaction!(tx);
-        console.log("000000000000000000000000")
+        // const signed_tx = await wallet.signTransaction!(tx);
 
-        const serializing_tx = signed_tx.serialize().toString("base64");
-        console.log("serializing_tx: ", serializing_tx);
+        // const serializing_tx = signed_tx.serialize().toString("base64");
+        // console.log("serializing_tx: ", serializing_tx);
 
-        let nft = false;
+        // let nft = false;
 
-        if (nft_name !== "Select") {
-            nft = true
-        }
+        // if (nft_name !== "Select") {
+        //     nft = true
+        // }
 
     const data = {
         owner: anchorwallet.publicKey.toBase58(),
@@ -89,12 +86,12 @@ export async function submit(
         native_coin: sol,
         server_id: server_id,
         nft_name: nft_name,
-        nft: nft,
+        // nft: nft,
         token_name: token,
         winner: null,
         live: true,
         interact: 0,
-        index: index,
+        // index: index,
         affilate: affilate,
         affiliat_address: affiliat_address ? affiliat_address.toBase58() : null,
         live_holder: true,
@@ -103,18 +100,18 @@ export async function submit(
 
     const user = anchorwallet.publicKey.toBase58();
 
-
+    console.log('user===>', user);
     
     const resp = await fetch("/api/program/sol/send_list", {
         method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-      },
-    body: JSON.stringify({
-        serializing_tx,
-        data,
-        user,
-      }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            // serializing_tx,
+            data,
+            user,
+        }),
     });
 
     const hashJson = await resp.json();
