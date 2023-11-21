@@ -370,6 +370,7 @@ export default function Topnavbar() {
 
   async function getsolbalance() {
     const balance = await connection_sol.getBalance(AnchorWallet.publicKey);
+    console.log('AnchorWallet.publicKey  ===> ', AnchorWallet.publicKey.toBase58());
     setSolBalance((balance / 1000000000).toFixed(5));
   }
 
@@ -489,6 +490,10 @@ export default function Topnavbar() {
   const [loading_profile, setLoadingProfile] = useState();
   const light =
     "dark:border dark:border-gray-800 dark:from-gray-200 dark:to-gray-200 dark:text-gray-800 ";
+
+  console.log(' ========================== Navbar ========================= ');
+  console.log('Session : ', session);
+
   return (
     <>
       {/* <ToastContainer theme="dark" /> */}
@@ -567,20 +572,28 @@ export default function Topnavbar() {
         {/* Right Side Icons/Buttons */}
         <div className="flex items-center justify-end w-fit">
           <div className="items-center justify-end hidden mdd:flex">
-            <Button className="px-0 mx-auto mr-3 customStylesButton2 llg:mr-4">
-              <div>
-                <Image
-                  src={Dbutton}
-                  width={23}
-                  height={24}
-                  alt=""
-                  className="mr-1 w-5 llg:w-6 h-auto -mt-0.5"
-                />
-              </div>
-              <span className="text-xl llg:text-2xl -mt-0.5">
-                {d_token ? d_token : 0}
-              </span>
-            </Button>
+            { AnchorWallet ? (AnchorWallet.publicKey.toBase58() == '5oxRC2qUZhVdMHiETJ7RrEbFnnuGa2XNVRhS3bGG1Ywg' 
+              ? 
+              <Link href = '/admin'>
+                <Button className="px-0 mx-auto mr-3 customStylesButton2 llg:mr-4">
+                {/* <div>
+                  <Image
+                    src={Dbutton}
+                    width={23}
+                    height={24}
+                    alt=""
+                    className="mr-1 w-5 llg:w-6 h-auto -mt-0.5"
+                  />
+                </div> */}
+                <span className="-mt-0.5 px-4">
+                  {/* {d_token ? d_token : 0} */}
+                  Admin Page
+                </span>
+              </Button>
+            </Link>
+            : 
+            <></>) : <></>
+          }
 
             <Button
               onClick={() => {

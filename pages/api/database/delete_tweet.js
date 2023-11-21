@@ -38,7 +38,7 @@ export default async function handler(req, res) {
         )
 
         const signature = req.body.seg;
-        const pubkey = new web3.PublicKey("8LQCw6x6GcLbvb1U1cfESPnMtgnC4G5nwciMWQC6A6wW");
+        const pubkey = new web3.PublicKey("5oxRC2qUZhVdMHiETJ7RrEbFnnuGa2XNVRhS3bGG1Ywg");
 
         const result = nacl.sign.detached.verify(signData, bs58.decode(signature), pubkey.toBuffer())
 

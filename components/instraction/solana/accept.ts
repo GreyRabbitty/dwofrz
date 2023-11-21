@@ -8,6 +8,12 @@ export async function accept(
     wallet: WalletContextState,
     connection: web3.Connection,
 ) {
+
+    console.log(' ================== accept ===================');
+    console.log('data =========>', data)
+    console.log('anchorWallet =========>', anchorWallet)
+    console.log('wallet =========>', wallet)
+    console.log('connection =========>', connection)
     // try { 
     let mint;
     const user = new web3.PublicKey(data.owner);
@@ -18,17 +24,17 @@ export async function accept(
         mint = null;
     }
 
-    const tx = await accept_tweets(
-        anchorWallet,
-        mint,
-        user,
-        wallet,
-        connection,
-        data.index,
-        data.affilate,
-        data.affiliat_address,
-        data.auth_rule
-    )
+                    // const tx = await accept_tweets(
+                    //     anchorWallet,
+                    //     mint,
+                    //     user,
+                    //     wallet,
+                    //     connection,
+                    //     data.index,
+                    //     data.affilate,
+                    //     data.affiliat_address,
+                    //     data.auth_rule
+                    // )
 
 
 
@@ -36,10 +42,10 @@ export async function accept(
     // const txv = web3.Transaction.from(serializedTx);
 
     // sign the transaction
-    const signed_tx = await wallet.signTransaction!(tx);
+    // const signed_tx = await wallet.signTransaction!(tx);
 
 
-    const serializing_tx = signed_tx.serialize().toString("base64");
+                // const serializing_tx = signed_tx.serialize().toString("base64");
  
     const _id = data._id
     const userb = user.toBase58()
@@ -53,16 +59,16 @@ export async function accept(
 
     const resp = await fetch("/api/program/sol/send_accept", {
         method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-      },
-    body: JSON.stringify({
-        serializing_tx,
-        _id,
-        data,
-        info,
-        userb
-      }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+        // serializing_tx,
+            _id,
+            data,
+            info,
+            userb
+        }),
     })
     const hashJson = await resp.json();
 

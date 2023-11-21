@@ -35,7 +35,7 @@ const Home: NextPage = () => {
 
       <Container className="max-w-screen-xl pb-10">
         <Homepage />
-        {/* <Tasks /> */}
+        <Tasks />
       </Container>
       {/* {!session && <>
         Not signed in <br/>

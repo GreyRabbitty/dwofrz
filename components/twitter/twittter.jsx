@@ -911,19 +911,19 @@ export default function twittter({
       </Head>
       <div className="max-w-[1400px] xxl:max-w-[2000px] mx-auto px-[3%] my-10 ">
         <div className="w-full rounded-full  p-[2px] bg-transparent ">
-          <div className="rounded-3xl w-full h-full m-auto bg-transparent ">
-            <div className="w-full h-full rounded-3xl bg-transparent overflow-hidden ">
+          <div className="w-full h-full m-auto bg-transparent rounded-3xl ">
+            <div className="w-full h-full overflow-hidden bg-transparent rounded-3xl ">
               {/* <div className="flex justify-end">
                 <Link href={"/"}>
                   <Image src={Backbotton} width={40} height={29} alt="" />
                 </Link>
               </div> */}
-              <div className="flex lg:flex-row-reverse sm:flex-col justify-between items-stretch">
+              <div className="flex items-stretch justify-between lg:flex-row-reverse sm:flex-col">
                 <div className="p1 h-fit max-w-[600px] llg:min-w-[550px] mx-auto lg:mx-0 p-[1px] mt-2 lg:w-[37%] lg:mr-[4%] lg:min-w-[380px] bg-gradient-to-t from-[var(--dwtwo)] to-[var(--dwdark)]  rounded-3xl  w-[94%] ">
-                  <div className="w-full h-full rounded-3xl p2bg  p-2 md:p-9">
-                    <div className="flex lg:flex-col llg:flex-row justify-between items-start">
+                  <div className="w-full h-full p-2 rounded-3xl p2bg md:p-9">
+                    <div className="flex items-start justify-between lg:flex-col llg:flex-row">
                       {/* Top title */}
-                      <div className="toptile text-3xl font-semibold flex items-center">
+                      <div className="flex items-center text-3xl font-semibold toptile">
                         <div
                           onClick={() => _get_followers()}
                           className="w-[85px] md:w-[120px]"
@@ -936,7 +936,7 @@ export default function twittter({
                             alt=""
                           />
                         </div>
-                        <div className="mx-3 flex flex-col items-start justify-start">
+                        <div className="flex flex-col items-start justify-start mx-3">
                           <div className="rating">
                             <div className="flex items-center text-base md:text-2xl">
                               <div className="mr-1 text-yellow-400">
@@ -958,7 +958,7 @@ export default function twittter({
                           </div>
                           <div
                             // onClick={() => eth_point()}
-                            className="mt-4 text-xl font-semibold hidden md:block"
+                            className="hidden mt-4 text-xl font-semibold md:block"
                           >
                             {data && data.name}
                           </div>
@@ -972,7 +972,7 @@ export default function twittter({
                             // target="_blank"
                             className="discord font-semibold border-[1.9px] border-[var(--dwtwo)] dark:border-gray-800 lg:mt-5 xl:mt-0 rounded-xl cursor-pointer px-4 py-2 text-sm hover:scale-105 transition-all flex items-center"
                           >
-                            <div className="text-2xl text-fuchsia-500 mr-2">
+                            <div className="mr-2 text-2xl text-fuchsia-500">
                               <FaDiscord />
                             </div>
                             <div className="mr-2">{discord_counts}</div>
@@ -984,7 +984,7 @@ export default function twittter({
                             // target="_blank"
                             className="twitter font-semibold border-[1.9px] border-[var(--dwtwo)] dark:border-gray-800 rounded-xl cursor-pointer px-4 py-2 text-sm mt-3 hover:scale-105 transition-all flex items-center"
                           >
-                            <div className="text-2xl text-fuchsia-500 mr-2">
+                            <div className="mr-2 text-2xl text-fuchsia-500">
                               <FaTwitter />
                             </div>
                             <div>{followers}</div>
@@ -1013,10 +1013,10 @@ export default function twittter({
                     {/* rating */}
                     {is_didnt_rate && (
                       <div className="flex flex-col items-center justify-center">
-                        <div className="text-xl font-normal items-center  mb-1">
+                        <div className="items-center mb-1 text-xl font-normal">
                           Add Your Rating:
                         </div>
-                        <div className="flex justify-center items-center">
+                        <div className="flex items-center justify-center">
                           <Rating
                             name="simple-controlled"
                             value={ratingvalue}
@@ -1031,7 +1031,7 @@ export default function twittter({
                           <div className="mx-2 text-xl ">
                             ({ratingvalue || 0})
                           </div>
-                          {/* <AiFillStar className="mx-2 text-yellow-400 text-3xl" />
+                          {/* <AiFillStar className="mx-2 text-3xl text-yellow-400" />
                            */}
                         </div>
                       </div>
@@ -1040,7 +1040,7 @@ export default function twittter({
                     Write a review
                   </div> */}
                     {/* btn */}
-                    <div className="flex w-full justify-center">
+                    <div className="flex justify-center w-full">
                       {!live && winner && !data.native_coin && (
                         <div className="winner dark:shadow-none dark:bg-gradient-to-t dark:from-gray-200 dark:to-gray-200 dark:border dark:border-gray-800 text-base flex itmes-center mt-6 px-6 lg:px-2 llg:px-6 fontquick py-[10px] rounded-xl">
                           Winner: {winner.slice(0, 5)}...
@@ -1098,7 +1098,7 @@ export default function twittter({
                             <FaTwitter />
                           </span>
                         </div>
-                        <div className="py-2 text-center text-lg  font-semibold">
+                        <div className="py-2 text-lg font-semibold text-center">
                           Tweet Preview
                         </div>
                         {/* Image Twitter */}
@@ -1117,7 +1117,7 @@ export default function twittter({
                                 {/* <Skelaton /> */}
                                 <RingLoader color="#ffa048" />
                               </span>
-                              <span className="dark:block hidden">
+                              <span className="hidden dark:block">
                                 {/* <Skelaton /> */}
                                 <RingLoader color="#222" />
                               </span>
@@ -1139,7 +1139,7 @@ export default function twittter({
                                 {/* <Skelaton /> */}
                                 <RingLoader color="#ffa048" />
                               </span>
-                              <span className="dark:block hidden">
+                              <span className="hidden dark:block">
                                 {/* <Skelaton /> */}
                                 <RingLoader color="#222" />
                               </span>
@@ -1148,7 +1148,7 @@ export default function twittter({
                         </div>
                         {/* counter */}
                         <div className="mx-auto max-w-[584px]">
-                          <div className="lg:text-xl sm:text-sm text-center md:text-base justify-center md:justify-start  sm:mx-1 md:mx-4   pb-2 my-2 flex items-center">
+                          <div className="flex items-center justify-center pb-2 my-2 text-center lg:text-xl sm:text-sm md:text-base md:justify-start sm:mx-1 md:mx-4">
                             <div className="mr-1 text-white/50 dark:text-black/50">
                               Time Remaining:
                             </div>
@@ -1177,8 +1177,9 @@ export default function twittter({
                         {/* counter */}
                         {/* Image */}
                         <div className="mt-5 mx-auto max-w-[584px] px-10 lg:px-4 flex md:flex-row sm:flex-col justify-between items-center">
-                          <div className="flex justify-start items-center -mt-1">
-                            {/* follow */}
+                          <div className="flex items-center justify-start -mt-1">
+                            {/* ///////////////////////////////////////   T_POST  ///////////////////////////////// */}
+                            {/* follow */} 
                             {method ? (
                               (method == 3 || method == 4) && (
                                 <Link
@@ -1252,7 +1253,7 @@ export default function twittter({
                               <span></span>
                             )}
                           </div>
-                          <div className="flex justify-between items-center md:mt-0 sm:mt-2">
+                          <div className="flex items-center justify-between md:mt-0 sm:mt-2">
                             {!participate && !is_replay && (
                               <div className="inpu bg-gradient-to-t  mr-2 md:mr-5  from-[var(--dwtop)] dark:from-gray-200 dark:to-gray-200 focus:bg-[var(--darktwo)] sm:w-full md:w-[55%] min-w-[220px] p-[2px] text-sm to-[#1D1F24] rounded-lg">
                                 <input
@@ -1296,11 +1297,11 @@ export default function twittter({
                       )
                       } */}
                         </div>
-                        <div className="linos1 mt-5"></div>
-                        <div className="mt-5 w-full md:p-3">
+                        <div className="mt-5 linos1"></div>
+                        <div className="w-full mt-5 md:p-3">
                           <div className="bgTweet2 border-[2px] border-solid border-[#724C2D] rounded-lg">
                             <div className="w-full text-white/80 sm:py-[12px] md:py-2 px-4 h-full    ">
-                              <div className="w-full flex justify-between items-center font-semibold">
+                              <div className="flex items-center justify-between w-full font-semibold">
                                 <div className="text-sm">Requirement:</div>
                                 <div className="cursor-pointer sm:pl-2 md:pl-0 font-normal text-[var(--dwtwo)] dark:text-gray-800 text-[10px] md:text-sm ">
                                   {/* {console.log(typeof(data.bundle))} */}
@@ -1310,7 +1311,7 @@ export default function twittter({
                             </div>
                             <div className="linos2"></div>
                             <div className="w-full text-white/80 sm:py-[12px] md:py-2 px-4 h-full  ">
-                              <div className="w-full flex justify-between items-center font-semibold">
+                              <div className="flex items-center justify-between w-full font-semibold">
                                 <div className="text-sm">Rewards:</div>
                                 <div className="cursor-pointer font-normal text-[var(--dwtwo)] dark:text-gray-800 text-[10px] md:text-sm">
                                   {data && data.network == "ETH" ? (
@@ -1360,7 +1361,7 @@ export default function twittter({
                             <div className="linos2"></div>
                             {data.native_coin ? (
                               <div className="sm:py-[12px] md:py-2 px-4 h-full text-white/80  ">
-                                <div className="w-full flex justify-between items-center ">
+                                <div className="flex items-center justify-between w-full ">
                                   <div className="text-xs font-semibold">
                                     Claim :
                                   </div>
@@ -1370,14 +1371,14 @@ export default function twittter({
                                 </div>
                               </div>
                             ) : (
-                              <Accordion className="w-full font-semibold h-full bg-transparent text-white/80  ">
+                              <Accordion className="w-full h-full font-semibold bg-transparent text-white/80 ">
                                 <AccordionSummary
-                                  className="w-full flex justify-between"
+                                  className="flex justify-between w-full"
                                   aria-controls="panel1a-content"
                                   id="panel1a-header"
                                 >
-                                  <div className="w-full flex justify-between items-center ">
-                                    <div className="font-semibold text-sm md:text-base">
+                                  <div className="flex items-center justify-between w-full ">
+                                    <div className="text-sm font-semibold md:text-base">
                                       Participated :
                                     </div>
                                     <div className="flex items-center">
@@ -1408,11 +1409,11 @@ export default function twittter({
                                           participated_user.map((users, i) => (
                                             <tr
                                               key={i}
-                                              className=" border-b border-white/30 "
+                                              className="border-b  border-white/30"
                                             >
                                               <th
                                                 scope="row"
-                                                className="px-6 py-4 font-medium text-xs text-gray-100/80 dark:text-gray-600 whitespace-nowrap "
+                                                className="px-6 py-4 text-xs font-medium text-gray-100/80 dark:text-gray-600 whitespace-nowrap "
                                               >
                                                 {users.name.length > 8
                                                   ? users.name.slice(0, 8) +

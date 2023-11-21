@@ -98,6 +98,7 @@ export default function tasks() {
   }, []);
 
   async function accept_tweets_solana(data) {
+    console.log('====== Accept_tweets_solana ======');
     setrefresh(true);
     setdesable(true);
     notify_laoding("transaction pending...");
@@ -115,6 +116,7 @@ export default function tasks() {
       } else {
         data.featured_tweet = false;
       }
+      console.log(' Before Accepts Function ')
       await accept(data, AnchorWallet, wallet, connection);
       notify_delete();
       notify_success("transaction successful");
@@ -237,6 +239,7 @@ export default function tasks() {
       <div className="flex w-full min-h-screen pt-4">
         <div className="w-[16%] rounded-tr-sm min-w-[250px] text-[#0E9F6E] bg-gradient-to-t from-[#25252E] to-[#2C2B36] ">
           <div className="px-4 pt-8 text-base">
+            {/* Overview */}
             <div className="flex items-center">
               <div>
                 <Image src={icon1} width={20} height={20} alt="" />
@@ -250,6 +253,7 @@ export default function tasks() {
                 Overview
               </div>
             </div>
+            {/* Ragnarok-Form */}
             <div className="flex items-center my-3">
               <div>
                 <Image src={icon2} width={20} height={20} alt="" />
@@ -266,6 +270,7 @@ export default function tasks() {
                 <Image src={icon4} width={20} height={20} alt="" />
               </div>
             </div>
+            {/* Pandora-Form */}
             <div className="flex items-center ">
               <div>
                 <Image src={icon2} width={20} height={20} alt="" />

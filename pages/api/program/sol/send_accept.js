@@ -28,6 +28,9 @@ const client = new Client({
 });
 
 export default async function handle(req, res) {
+
+  console.log('================== api / program / sol / send_accept ===================');
+
   try {
     const fetchOptions = {
       method: "POST",
@@ -46,26 +49,33 @@ export default async function handle(req, res) {
 
     const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;
 
+
     // await new Promise(f => setTimeout(f, 10000))
 
-    const serialized = req.body.serializing_tx;
+    // const serialized = req.body.serializing_tx;
 
-    const buffer_tx = Buffer.from(serialized, "base64");
-    const rpc = process.env.RPC;
+    // const buffer_tx = Buffer.from(serialized, "base64");
+    // const rpc = process.env.RPC;
 
-    const connection = new web3.Connection(rpc, {
-      confirmTransactionInitialTimeout: 2147483647,
-    });
+    // const connection = new web3.Connection(rpc, {
+    //   confirmTransactionInitialTimeout: 2147483647,
+    // });
 
-    const hash = await connection.sendRawTransaction(buffer_tx, {
-      skipPreflight: true,
-    });
-    const confirmation = await connection.confirmTransaction(hash, "confirmed");
+    // const hash = await connection.sendRawTransaction(buffer_tx, {
+    //   skipPreflight: true,
+    // });
+    // const confirmation = await connection.confirmTransaction(hash, "confirmed");
 
-    if (confirmation.value.err) {
-      res.status(500).json(confirmation.value.err);
-    } else {
+    // if (confirmation.value.err) {
+    //   res.status(500).json(confirmation.value.err);
+    // } else {
       const data = req.body.data;
+
+      console.log(' >>>>>>>> Data API deleteOne doing ');
+
+      console.log('fetchOptions ===> ', fetchOptions);
+      console.log('fetchBody ===> ', fetchBody);
+      console.log('baseUrl ===> ', baseUrl);
 
       const deleteData = await fetch(`${baseUrl}/deleteOne`, {
         ...fetchOptions,
@@ -76,8 +86,18 @@ export default async function handle(req, res) {
       });
       const deleteDataJson = await deleteData.json();
 
+      console.log(' >>>>>>>> Data API deleteOne done, deleteDataJson ====> ', deleteDataJson);
+
       fetchBody.database = "user_apply";
       fetchBody.collection = req.body.userb;
+
+      console.log(' >>>>>>>> Data API updateOne doing ');
+
+      console.log('fetchOptions ===> ', fetchOptions);
+      console.log('fetchBody ===> ', fetchBody);
+      console.log('baseUrl ===> ', baseUrl);
+      console.log('_id ===> ', data.user_id);
+
       const user_info = await fetch(`${baseUrl}/updateOne`, {
         ...fetchOptions,
         body: JSON.stringify({
@@ -91,18 +111,22 @@ export default async function handle(req, res) {
           },
         }),
       });
-      // const readUserInfo = await user_info.json();
 
-      // if (readUserInfo) {
-      //     const deleteuserData = await fetch(`${baseUrl}/deleteOne`, {
-      //         ...fetchOptions,
-      //         body: JSON.stringify({
-      //             ...fetchBody,
-      //             filter: { _id: { $oid: readUserInfo._id } },
-      //         }),
-      //     });
-      //     const deleteuserDataJson = await deleteuserData.json();
-      // }
+      const readUserInfo = await user_info.json();
+
+      console.log(' >>>>>>>> Data API updateOne done, readUserInfo ====> ', readUserInfo);
+                        
+
+                        // if (readUserInfo) {
+                        //     const deleteuserData = await fetch(`${baseUrl}/deleteOne`, {
+                        //         ...fetchOptions,
+                        //         body: JSON.stringify({
+                        //             ...fetchBody,
+                        //             filter: { _id: { $oid: readUserInfo._id } },
+                        //         }),
+                        //     });
+                        //     const deleteuserDataJson = await deleteuserData.json();
+                        // }
 
       const info = req.body.info;
 
@@ -112,6 +136,13 @@ export default async function handle(req, res) {
       delete data._id;
       data.postAt = Date.now();
 
+      console.log(' >>>>>>>> Data API insertMany doing ');
+
+      console.log('fetchOptions ===> ', fetchOptions);
+      console.log('fetchBody ===> ', fetchBody);
+      console.log('baseUrl ===> ', baseUrl);
+      console.log('data ===> ', data);
+
       const insertData = await fetch(`${baseUrl}/insertMany`, {
         ...fetchOptions,
         body: JSON.stringify({
@@ -119,12 +150,22 @@ export default async function handle(req, res) {
           documents: [data],
         }),
       });
-      // const insertDataJson = await insertData.json();
+      const insertDataJson = await insertData.json();
+
+      console.log(' >>>>>>>> Data API insertMany done, insertDataJson ====> ', insertDataJson);
 
       fetchBody.database = "Notification";
       fetchBody.collection = req.body.userb;
 
       // // insert user data
+
+      console.log(' >>>>>>>> Data API insertMany doing ');
+
+      console.log('fetchOptions ===> ', fetchOptions);
+      console.log('fetchBody ===> ', fetchBody);
+      console.log('baseUrl ===> ', baseUrl);
+      console.log('data ===> ', data);
+
       const insertData_user = await fetch(`${baseUrl}/insertMany`, {
         ...fetchOptions,
         body: JSON.stringify({
@@ -132,6 +173,8 @@ export default async function handle(req, res) {
           documents: [info],
         }),
       });
+
+      console.log(' >>>>>>>> Data API insertMany done, insertData_user ====> ', insertData_user);
 
       if (data.native_coin) {
         switch (data.bundle) {
@@ -170,14 +213,15 @@ export default async function handle(req, res) {
       }
 
       res.status(200).json({
-        ss: "zz",
         // hash: hash,
-        // insertData: insertDataJson,
-        // // insertDataJson_user: insertDataJson_user,
-        // deleteDataJson: deleteDataJson,
-        // updateData: updateDataJson
+        insertData: insertDataJson,
+        insertDataJson_user: insertDataJson_user,
+        deleteDataJson: deleteDataJson,
+        updateData: updateDataJson,
+        readUserInfo: readUserInfo,
+        insertData_user: insertData_user
       });
-    }
+    // }
   } catch (e) {
     console.log(e);
     res.status(500).json(e);

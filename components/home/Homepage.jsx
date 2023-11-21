@@ -31,6 +31,9 @@ export default function Homepage() {
           }
         );
         const json = await result.json();
+
+        console.log('tweets fetch result ===========> ', json);
+
         arr = json;
         setTweets(json);
         setHotTweets(json);

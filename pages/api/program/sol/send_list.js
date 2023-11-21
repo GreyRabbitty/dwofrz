@@ -1,10 +1,5 @@
 import { web3 } from '@project-serum/anchor';
 import { getToken } from "next-auth/jwt";
-import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
-
-mongoose.connect(process.env.MONGODB_URI);
-mongoose.Promise = global.Promise;
 
 export default async function handle(req, res) {
 
@@ -22,7 +17,6 @@ export default async function handle(req, res) {
         })
       }
 
-      console.log('token =====> ', token);
 
         const fetchOptions = {
             method: "POST",
@@ -34,16 +28,15 @@ export default async function handle(req, res) {
           };
 
         const fetchBody = {
-          dataSource: process.env.MONGODB_DATA_SOURCE,
-          database: "user",
-          collection: req.body.user
+            dataSource: process.env.MONGODB_DATA_SOURCE,
+            database: "user",
+            collection: req.body.user
         };
 
-        console.log('fetchBody ===> ', fetchBody);
+
 
         const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;
 
-        console.log('baseUrl ===> ', baseUrl);
 
         // await new Promise(f => setTimeout(f, 10000))
 
@@ -86,13 +79,12 @@ export default async function handle(req, res) {
               ...fetchOptions,
               body: JSON.stringify({
                 ...fetchBody,
-                // filter: {
-                //   address: req.body.user,
-                // }
+                filter: {
+                  address: req.body.user,
+                }
               }),
             });
             const readUserInfo = (await user_info.json()).document;
-            console.log('user_info ====> ', readUserInfo)
 
             if (readUserInfo) {
               data.project_image = readUserInfo.pfp;
@@ -109,6 +101,7 @@ export default async function handle(req, res) {
             fetchBody.collection = req.body.user
             // see if the user tweet is approved or not
             data.approve = false;
+
             const insertData_user = await fetch(`${baseUrl}/insertOne`, {
               ...fetchOptions,
               body: JSON.stringify({
@@ -118,7 +111,6 @@ export default async function handle(req, res) {
             });
 
             const insertDataJson_user = await insertData_user.json();
-            console.log('insertDataJson_user ===> ', insertDataJson_user);
             data.user_id = insertDataJson_user.insertedId
 
             // insert the data
@@ -132,6 +124,7 @@ export default async function handle(req, res) {
               }),
             });
             const insertDataJson = await insertData.json();
+
   
             // // insert user data
 
@@ -145,7 +138,7 @@ export default async function handle(req, res) {
         }
     // }
     catch(e) {
-      console.log(e)
+      console.log(e);
       res.status(500).json({
         status: "ERR",
         message: e

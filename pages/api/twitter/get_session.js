@@ -1,6 +1,8 @@
 import { getToken } from "next-auth/jwt";
 
 export default async function handle(req, res) {
+
+  console.log('======================== pages / api / twitter / get_session ===========================');
   
   try {
       
