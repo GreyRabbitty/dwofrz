@@ -57,7 +57,7 @@ export default async (req, res) => {
       retweet: retweet,
     });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     return res.status(400).json({
       status: e.message,
     });

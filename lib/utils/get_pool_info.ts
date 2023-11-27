@@ -14,6 +14,6 @@ export async function get_total_staked(
         const account = await program.account.stakePool.fetch(pool);
         return account.totalStaked;
     } catch(e) {
-        console.log(e);
+        // console.log(e);
     }
 }

@@ -129,7 +129,7 @@ export default async function handle(req, res) {
       serializedTx: serialize,
     });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     res.status(400).json({
       status: "ERR",
       message: e,

@@ -24,7 +24,7 @@ const request_data = {
 
 export default async (req, res) => {
   const body = JSON.parse(req.body);
-  const { twitter_name } = body;
+  const { replay } = body;
 
   // const session = await getSession({ req });
   const token = await getToken({
@@ -52,7 +52,7 @@ export default async (req, res) => {
           "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            text: "Good Sunday!!! Happy Weekend to you.",
+            text: "Good afternoon",
           }),
         },
         function (error, response, body) {

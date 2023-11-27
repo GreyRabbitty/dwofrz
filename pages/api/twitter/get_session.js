@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 
 export default async function handle(req, res) {
 
-  console.log('======================== pages / api / twitter / get_session ===========================');
+  // console.log('======================== pages / api / twitter / get_session ===========================');
   
   try {
       
@@ -27,7 +27,7 @@ export default async function handle(req, res) {
         status: "ERR",
         message: e
       })
-    console.log(e)
+    // console.log(e)
   }
 
     

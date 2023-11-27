@@ -75,7 +75,7 @@ export async function get_staked(
 
 
     } catch(e) {
-        console.log(e);
+        // console.log(e);
     }
 }
 

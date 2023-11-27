@@ -98,7 +98,7 @@ export default function tasks() {
   }, []);
 
   async function accept_tweets_solana(data) {
-    console.log('====== Accept_tweets_solana ======');
+    // console.log('====== Accept_tweets_solana ======');
     setrefresh(true);
     setdesable(true);
     notify_laoding("transaction pending...");
@@ -116,13 +116,13 @@ export default function tasks() {
       } else {
         data.featured_tweet = false;
       }
-      console.log(' Before Accepts Function ')
+      // console.log(' Before Accepts Function ')
       await accept(data, AnchorWallet, wallet, connection);
       notify_delete();
       notify_success("transaction successful");
       reload_data();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       notify_delete();
       setrefresh(false);
       setdesable(false);
@@ -141,7 +141,7 @@ export default function tasks() {
       notify_success("transaction successful");
       reload_data();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       notify_delete();
       setrefresh(false);
       setdesable(false);
@@ -164,7 +164,7 @@ export default function tasks() {
       notify_success("transaction successful");
       reload_data();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       notify_delete();
       setrefresh(false);
       setdesable(false);
@@ -186,7 +186,7 @@ export default function tasks() {
       notify_success("transaction successful");
       reload_data();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       notify_delete();
       setrefresh(false);
       setdesable(false);

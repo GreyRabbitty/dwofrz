@@ -25,7 +25,7 @@ export default async (req, res) => {
     })
   }
 
-  // console.log(name);
+  // // console.log(name);
 
   try {
     const twitter = second_client.readWrite
@@ -33,9 +33,9 @@ export default async (req, res) => {
     const result = await twitter.v2.following(token.sub, {
       max_results: 300
     });
-    // console.log(result.data.length);
+    // // console.log(result.data.length);
 
-    // console.log(result);
+    // // console.log(result);
     let follow = false;
     result.data.map((_twitter) => {
       if (name == _twitter.name) {
@@ -47,14 +47,14 @@ export default async (req, res) => {
     //   screen_name: query,
     //   //   count: 10,
     // });
-    // console.log(follow);
+    // // console.log(follow);
 
     return res.status(200).json({
       status: "Ok",
       follow: follow,
     });
   } catch (e) {
-    console.log(e)
+    // console.log(e)
     return res.status(400).json({
       status: "ERR",
     });

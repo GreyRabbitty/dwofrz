@@ -39,12 +39,12 @@ export default async (req, res) => {
     });
 
 
-    // console.log(rest)
+    // // console.log(rest)
 
-    // console.log(tweet_id);
+    // // console.log(tweet_id);
 
     rest.data.map((liked) => {
-        // console.log(liked.name)
+        // // console.log(liked.name)
         if (liked.id == token.sub) {
             like = true;
         }

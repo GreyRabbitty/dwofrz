@@ -60,9 +60,9 @@ export async function list(
     const PROGRAM_ID = new web3.PublicKey(idl.metadata.address)
     const program = new Program(idl, idl.metadata.address, provider);
 
-      console.log('PROGRAM_ID ====> ', PROGRAM_ID.toBase58());
+      // console.log('PROGRAM_ID ====> ', PROGRAM_ID.toBase58());
 
-      console.log('program ====> ', program);
+      // console.log('program ====> ', program);
 
       const [escrow, escrow_bump] = web3.PublicKey.findProgramAddressSync(
         [
@@ -78,12 +78,12 @@ export async function list(
       );
       let index = 0;
       
-      console.log(counter.toBase58(), "Counter _++++")
-      console.log(escrow.toBase58(), "Escrow _++++")
+      // console.log(counter.toBase58(), "Counter _++++")
+      // console.log(escrow.toBase58(), "Escrow _++++")
 
       try {
          const account = await program.account.counter.fetch(counter);
-         console.log(account, "--------------------------------")
+         // console.log(account, "--------------------------------")
          index = Number(account.indexCounter) + 1;
       } catch(e) {
 
@@ -95,10 +95,10 @@ export async function list(
         .rpc({
           commitment: "finalized"
         })
-        console.log("THERERE")
+        // console.log("THERERE")
       }
 
-      console.log("--------------------------------")
+      // console.log("--------------------------------")
       let abbathor_ata;
       let abbathor_metadata;
       let abbathor_masteredtion;  
@@ -265,7 +265,7 @@ export async function list(
       supply = 0;
     }
     
-    console.log('transaction before ===========> ')
+    // console.log('transaction before ===========> ')
 
     const transaction = await program.methods.initializeListing(
         new BN(index),

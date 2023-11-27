@@ -30,7 +30,7 @@ export default async function handler(req, res) {
             }),
           });
           const updateDataJson = await updateData.json();
-          console.log(updateDataJson)
+          // console.log(updateDataJson)
           res.status(200).json(updateDataJson);
         }catch(e) {
             console.error(error);

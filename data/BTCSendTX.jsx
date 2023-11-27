@@ -9,13 +9,13 @@ export const sendWithUni = async (amt, to) => {
     let res = await window.unisat.switchNetwork("livenet");
   }
   const amount = amt * conversion;
-  console.log(amt, to);
+  // console.log(amt, to);
   try {
     let txid = await window.unisat.sendBitcoin(to, amount);
-    console.log(txid);
+    // console.log(txid);
     return txid;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 
@@ -28,10 +28,10 @@ export const sendWithHiro = async (amt, to) => {
       amount: amount,
       network: "mainnet",
     });
-    console.log(resp.result.txid);
+    // console.log(resp.result.txid);
     return resp;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   } finally {
   }
 };
@@ -65,10 +65,10 @@ export const sendWithUniPlain = async (amt, to) => {
   }
   try {
     let txid = await window.unisat.sendBitcoin(to, amt);
-    console.log(txid);
+    // console.log(txid);
     return txid;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 };
 
@@ -80,10 +80,10 @@ export const sendWithHiroPlain = async (amt, to) => {
       amount: amt,
       network: "mainnet",
     });
-    console.log(resp.result.txid);
+    // console.log(resp.result.txid);
     return resp;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   } finally {
   }
 };

@@ -9,11 +9,11 @@ export async function accept(
     connection: web3.Connection,
 ) {
 
-    console.log(' ================== accept ===================');
-    console.log('data =========>', data)
-    console.log('anchorWallet =========>', anchorWallet)
-    console.log('wallet =========>', wallet)
-    console.log('connection =========>', connection)
+    // console.log(' ================== accept ===================');
+    // console.log('data =========>', data)
+    // console.log('anchorWallet =========>', anchorWallet)
+    // console.log('wallet =========>', wallet)
+    // console.log('connection =========>', connection)
     // try { 
     let mint;
     const user = new web3.PublicKey(data.owner);

@@ -68,7 +68,7 @@ const SellerDetailsModal = ({
           sendPurchase();
         },
         onCancel: () => {
-          console.log("User cancelled transaction");
+          // console.log("User cancelled transaction");
         },
       };
       let tx = await sendWithXVerse(sendTxOptions);
@@ -87,7 +87,7 @@ const SellerDetailsModal = ({
         close(!open);
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }
 

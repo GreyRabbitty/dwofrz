@@ -39,7 +39,7 @@ export const getStakeEntriesForUser = async (
           );
         }
       } catch (e) {
-        console.log(`Failed to decode token manager data`);
+        // console.log(`Failed to decode token manager data`);
       }
     });
     return stakeEntryDatas.sort((a, b) =>

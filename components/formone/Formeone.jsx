@@ -212,11 +212,11 @@ export default function Formeone() {
 
     try {
       // https:ragnarok.dworfz/apply?user=address
-      console.log('router.query ===========>', router);
-      console.log('router.query.user ===========>', router.query.user);
+      // console.log('router.query ===========>', router);
+      // console.log('router.query.user ===========>', router.query.user);
       // if (router.query.user) {
       //   affiliat_address = new web3.PublicKey(router.query.user);
-      //   console.log('affiliat_address ===========>', affiliat_address);
+      //   // console.log('affiliat_address ===========>', affiliat_address);
       //   if (!web3.PublicKey.isOnCurve(affiliat_address)) {
       //     return notify_error("Invalid solana address in the affiliate link");
       //   }
@@ -232,7 +232,7 @@ export default function Formeone() {
       return notify_warning("connect your twitter first!");
     }
 
-    console.log('session ==> ', session);
+    // console.log('session ==> ', session);
 
     let mint;
     let programable_config = null;
@@ -271,7 +271,7 @@ export default function Formeone() {
     notify_laoding("transaction pending...");
 
 
-    console.log("+++++++++++++++++++++++")
+    // console.log("+++++++++++++++++++++++")
     try {
       await submit(
         AnchorWallet,
@@ -300,35 +300,35 @@ export default function Formeone() {
         claim,
         programable_config
       );
-      console.log('================ S T A R T ==================>')
+      // console.log('================ S T A R T ==================>')
 
-      // console.log('AnchorWallet = =========>  ',AnchorWallet.publicKey.toBase58(),)
-      //   console.log('twitter_id = =========>  ',twitter_id,)
-      //   console.log('handle_name = =========>  ',handle_name,)
-      //   console.log('discord_constact = =========>  ',discord_constact,)
-      //   console.log('discord_url = =========>  ',discord_url,)
-      //   console.log('twitter_url = =========>  ',twitter_url,)
-      //   console.log('chain = =========>  ',chain,)
-      //   console.log('mint = =========>  ',mint,)
-      //   console.log('bundle = =========>  ', bundle,)
-      //   console.log('discription = =========>  ',discription,)
-      //   console.log('featured = =========>  ',featured,)
-      //   console.log('amoun = =========>  ',amount,)
-      //   console.log('native_coin = =========>  ',native_coin,)
-      //   console.log('wallet = =========>  ',wallet.publicKey.toBase58(),)
-      //   console.log('connection = =========>  ',connection,)
-      //   console.log('token = =========>  ',token,)
-      //   console.log('server_id = =========>  ',server_id,)
-      //   console.log('nft = =========>  ', nft, )
-      //   console.log('project_image = =========>  ',project_image,)
-      //   console.log('holder = =========>  ',holder,)
-      //   console.log('abbaothor_mint = =========>  ',abbaothor_mint,)
-      //   console.log('affilate = =========>  ',affilate,)
-      //   console.log('affiliat_address = =========>  ',affiliat_address,)
-      //   console.log('claim = =========>  ',claim,)
-      //   console.log('programable_config = =========>  ',programable_config)
+      // // console.log('AnchorWallet = =========>  ',AnchorWallet.publicKey.toBase58(),)
+      //   // console.log('twitter_id = =========>  ',twitter_id,)
+      //   // console.log('handle_name = =========>  ',handle_name,)
+      //   // console.log('discord_constact = =========>  ',discord_constact,)
+      //   // console.log('discord_url = =========>  ',discord_url,)
+      //   // console.log('twitter_url = =========>  ',twitter_url,)
+      //   // console.log('chain = =========>  ',chain,)
+      //   // console.log('mint = =========>  ',mint,)
+      //   // console.log('bundle = =========>  ', bundle,)
+      //   // console.log('discription = =========>  ',discription,)
+      //   // console.log('featured = =========>  ',featured,)
+      //   // console.log('amoun = =========>  ',amount,)
+      //   // console.log('native_coin = =========>  ',native_coin,)
+      //   // console.log('wallet = =========>  ',wallet.publicKey.toBase58(),)
+      //   // console.log('connection = =========>  ',connection,)
+      //   // console.log('token = =========>  ',token,)
+      //   // console.log('server_id = =========>  ',server_id,)
+      //   // console.log('nft = =========>  ', nft, )
+      //   // console.log('project_image = =========>  ',project_image,)
+      //   // console.log('holder = =========>  ',holder,)
+      //   // console.log('abbaothor_mint = =========>  ',abbaothor_mint,)
+      //   // console.log('affilate = =========>  ',affilate,)
+      //   // console.log('affiliat_address = =========>  ',affiliat_address,)
+      //   // console.log('claim = =========>  ',claim,)
+      //   // console.log('programable_config = =========>  ',programable_config)
 
-      console.log('================ E N D ==================>')
+      // console.log('================ E N D ==================>')
       notify_delete();
       notify_success("transaction successful");
       reload_data();
@@ -336,7 +336,7 @@ export default function Formeone() {
       setSecondinput(false);
       settherdinput(true);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       notify_delete();
       setrefresh(false);
       setdesable(false);
@@ -345,7 +345,7 @@ export default function Formeone() {
   }
 
   async function apply_eth() {
-    console.log('apply_eth =================> ');
+    // console.log('apply_eth =================> ');
     if (!active) return;
     if (
       !twitter_id ||
@@ -424,7 +424,7 @@ export default function Formeone() {
       setSecondinput(false);
       settherdinput(true);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       notify_delete();
       setrefresh(false);
       setdesable(false);

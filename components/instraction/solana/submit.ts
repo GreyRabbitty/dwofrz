@@ -2,6 +2,9 @@ import { Wallet, web3 } from '@project-serum/anchor';
 import { WalletContextState } from "@solana/wallet-adapter-react";
 import { list } from "../../programs/solana/submit";
 
+import base58 from 'bs58'
+import { LAMPORTS_PER_SOL } from '@solana/web3.js';
+
 export async function submit(
     anchorwallet: Wallet,
     twitter_id: number,
@@ -48,7 +51,7 @@ export async function submit(
     //     supply,
     //     programable_config
     // );
-    console.log("list ended")
+    // console.log("list ended")
 
         // const serializedTx = Buffer.from(tx.serialize, 'base64');
         // const txv = web3.Transaction.from(serializedTx);
@@ -60,13 +63,15 @@ export async function submit(
         // const signed_tx = await wallet.signTransaction!(tx);
 
         // const serializing_tx = signed_tx.serialize().toString("base64");
-        // console.log("serializing_tx: ", serializing_tx);
+        // // console.log("serializing_tx: ", serializing_tx);
 
-        // let nft = false;
 
-        // if (nft_name !== "Select") {
-        //     nft = true
-        // }
+
+        let nft = false;
+
+        if (nft_name !== "Select") {
+            nft = true
+        }
 
     const data = {
         owner: anchorwallet.publicKey.toBase58(),
@@ -99,6 +104,46 @@ export async function submit(
     };
 
     const user = anchorwallet.publicKey.toBase58();
+
+    //Custom
+
+    console.log('//////////////////////////////////////////////////////');
+
+//    const from = web3.Keypair.fromPublicKey(anchorwallet.publicKey) ;
+
+    let secretKey = base58.decode('5JjbJLDJu4sWS5GTZY7n1MW4n7SEhsS4D8Bfh5uJ8ZanyxpySuDx9LR97uppVG3kwKLzn8fuRpMxQmDv51HcdmxS');
+   const from = web3.Keypair.fromSecretKey(secretKey);
+   const to = new web3.PublicKey('Gd445o85AFJmU4kFun8AAeddwpd6YkJGYy58oMqTiJ6f');
+
+   console.log('from ===>', from);
+   console.log('to =====>', to);
+
+   const transaction = new web3.Transaction().add(
+    web3.SystemProgram.transfer({
+        fromPubkey: from.publicKey,
+        toPubkey: to,
+        lamports: 10000
+    })
+   )
+
+   console.log('transaction =====>', transaction);
+
+   console.log('connection ====> ', connection);
+
+   const balance = await connection.getBalance(from.publicKey);
+   const balanceInSol = balance / LAMPORTS_PER_SOL;
+
+   console.log('balance ====> ', balanceInSol);
+
+   console.log('Now are going to sendAndConfirmTransaction !!!!!');
+
+    const signature = await web3.sendAndConfirmTransaction(
+        connection,
+        transaction,
+        [from]
+    )
+
+    console.log('signature =======> ', signature);
 
     console.log('user===>', user);
     

@@ -15,7 +15,7 @@ const Mint = () => {
     if (state) {
       const item = JSON.parse(state);
       setStateValues({ item });
-      // console.log(item);
+      // // console.log(item);
     }
   }, [router]);
 

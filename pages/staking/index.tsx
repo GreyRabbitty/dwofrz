@@ -65,7 +65,7 @@ export default function index() {
   const stake_pool = new PublicKey(
     "J5pFu3e73kYN6C7hqu2W8zBupsQyGeDNxUDzpn9NyZLp"
   );
-  // console.log("pool: " + stake_pool.toBase58());
+  // // console.log("pool: " + stake_pool.toBase58());
 
   // const tx2 = await update_reward_distributor(
   //   AnchorWallet,
@@ -95,7 +95,7 @@ export default function index() {
   //   return console.error(confirmation.value.err);
   // }
   //   } catch (e) {
-  //     console.log(e);
+  //     // console.log(e);
   //   }
   }
 
@@ -107,7 +107,7 @@ export default function index() {
 
   //     await init_entry(AnchorWallet, pool.toBase58(), connection, mint);
   //   } catch (e) {
-  //     console.log(e);
+  //     // console.log(e);
   //   }
   // }
 
@@ -116,7 +116,7 @@ export default function index() {
   //     if (!AnchorWallet) return;
   //     await init_identifier(AnchorWallet, connection);
   //   } catch (e) {
-  //     console.log(e);
+  //     // console.log(e);
   //   }
   // }
 
@@ -153,7 +153,7 @@ export default function index() {
       }
 
       const txx = splite_Array(tx, 50);
-      console.log(txx);
+      // console.log(txx);
       await Promise.all(txx.map( async (t) => {
       const signedTransactions = await wallet.signAllTransactions!(t);
       for (const ta of signedTransactions) {
@@ -178,7 +178,7 @@ export default function index() {
     } catch (e) {
       notify_delete();
       notify_error("Transaction Failed!");
-      console.log(e);
+      // console.log(e);
     } finally {
       setLoading(false);
     }
@@ -200,7 +200,7 @@ export default function index() {
         arr.push(...res!);
       });
 
-      console.log(arr);
+      // console.log(arr);
 
       const tx: Transaction[] = [];
       let j = 0;
@@ -208,7 +208,7 @@ export default function index() {
 
       arr?.map(async (nft) => {
         const mint = nft.mintAddress;
-        console.log(nft.mintAddress);
+        // console.log(nft.mintAddress);
 
         const tx1 = await stake(
           AnchorWallet,
@@ -249,7 +249,7 @@ export default function index() {
     } catch (e) {
       notify_delete();
       notify_error("Transaction Failed!");
-      console.log(e);
+      // console.log(e);
     } finally {
       setLoading(false);
     }
@@ -278,7 +278,7 @@ export default function index() {
         return notify_worning("Nothing To Claim!");
       }
 
-      console.log(arr);
+      // console.log(arr);
 
       const tx: Transaction[] = [];
       let j = 0;
@@ -286,7 +286,7 @@ export default function index() {
 
       arr?.map(async (nft) => {
         const mint = nft.mintAddress;
-        console.log(nft.mintAddress);
+        // console.log(nft.mintAddress);
 
         const reward_mint = new PublicKey(
           "PNTNyw5Yqb2Qf5jMV7jhfDMBaTDpxBKiyYS8uVzCCPH"
@@ -326,7 +326,7 @@ export default function index() {
     } catch (e) {
       notify_delete();
       notify_error("Transaction Failed!");
-      console.log(e);
+      // console.log(e);
     } finally {
       setLoading(false);
     }
@@ -370,7 +370,7 @@ export default function index() {
       }
 
       const txx = splite_Array(tx, 50);
-      console.log(txx);
+      // console.log(txx);
       await Promise.all(txx.map( async (t) => {
         const signedTransactions = await wallet.signAllTransactions!(t);
         for (const ta of signedTransactions) {
@@ -387,7 +387,7 @@ export default function index() {
     } catch (e) {
       notify_delete();
       notify_error("Transaction Failed!");
-      console.log(e);
+      // console.log(e);
     } finally {
       setLoading(false);
     }
@@ -417,7 +417,7 @@ export default function index() {
 
       arr?.map(async (nft) => {
         const mint = nft.mintAddress;
-        console.log(nft.mintAddress);
+        // console.log(nft.mintAddress);
 
         const reward_mint = new PublicKey(
           "PNTNyw5Yqb2Qf5jMV7jhfDMBaTDpxBKiyYS8uVzCCPH"
@@ -462,7 +462,7 @@ export default function index() {
       setLoading(false);
       notify_delete();
       notify_error("Transaction Failed!");
-      console.log(e);
+      // console.log(e);
     } finally {
       setLoading(false);
     }
@@ -506,7 +506,7 @@ export default function index() {
       }
 
       const txx = splite_Array(tx, 50);
-      console.log(txx);
+      // console.log(txx);
       await Promise.all(txx.map( async (t) => {
       const signedTransactions = await wallet.signAllTransactions!(t);
       for (const ta of signedTransactions) {
@@ -530,7 +530,7 @@ export default function index() {
     } catch (e) {
       notify_delete();
       notify_error("Transaction Failed!");
-      console.log(e);
+      // console.log(e);
     } finally {
       setLoading(false);
     }
@@ -595,7 +595,7 @@ export default function index() {
   //   } catch (e) {
   //     notify_delete();
   //     notify_error("Transaction Failed!");
-  //     console.log(e);
+  //     // console.log(e);
   //   } finally {
   //     setLoading(false);
   //   }
@@ -676,7 +676,7 @@ export default function index() {
         }
       });
 
-      // console.log(token)
+      // // console.log(token)
 
       let staked_nfts = await getStakeEntriesForUser(
         connection,
@@ -697,7 +697,7 @@ export default function index() {
       //   pool.toBase58()
       // );
 
-      // console.log(staked_nfts);
+      // // console.log(staked_nfts);
       const result = await get_claim_amount(
         AnchorWallet,
         connection,
@@ -710,18 +710,18 @@ export default function index() {
       setAmount(result!.amount);
 
       let leng = Number((token.length / 100).toFixed(0));
-      // console.log(leng)
+      // // console.log(leng)
       let start = 0;
       let end = 100;
       for (let i = 0; i <= leng; i++) {
         const token_slice = token.slice(start, end);
-        // console.log(token_slice)
+        // // console.log(token_slice)
         let len = token_slice.length;
         let j = 0;
         token_slice.map(async (nft: any, g: number) => {
           const rep_image = await fetch(nft.uri);
           const image = await rep_image.json();
-          // console.log(g + start)
+          // // console.log(g + start)
           token[g + 100 * i].id = g + 100 * i;
           token[g + 100 * i].image = image["image"];
           j = g;
@@ -732,8 +732,8 @@ export default function index() {
 
         start = start + 100;
         end = end + 100;
-        // console.log(start)
-        // console.log(end);
+        // // console.log(start)
+        // // console.log(end);
         await new Promise((resolve) => setTimeout(resolve, 2000)); // wait for 5 seconds
       }
 
@@ -744,10 +744,10 @@ export default function index() {
         } else {
           const rep_image = await fetch(nft.uri);
           const image = await rep_image.json();
-          // console.log(g + start)
+          // // console.log(g + start)
           token[i].id = i;
           token[i].image = image["image"];
-          // console.log("number:  " + i + "don't exist!");
+          // // console.log("number:  " + i + "don't exist!");
         }
         j = i;
       });
@@ -763,12 +763,12 @@ export default function index() {
         );
         staked_nftss[0].amount_to_claim = nft.amount_to_claim;
         staked_nftss[0].lastStakedAt = nft.lastStakedAt;
-        // console.log(staked_nftss)
+        // // console.log(staked_nftss)
         staked_nft.push(...staked_nftss);
       });
 
-      // console.log("staked_nft");
-      // console.log(staked_nft);
+      // // console.log("staked_nft");
+      // // console.log(staked_nft);
 
       let arr_token: any[] = [];
       token!.map((nft: any) => {
@@ -780,14 +780,14 @@ export default function index() {
         }
       });
 
-      // console.log(arr_token);
-      // console.log(staked_nft);
+      // // console.log(arr_token);
+      // // console.log(staked_nft);
       setNfts(arr_token);
       setLoading1(false);
       setStaked(staked_nft);
       setLoading2(false);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 
@@ -833,7 +833,7 @@ export default function index() {
   }
   useEffect(() => {
     setSelect(select);
-    console.log(select);
+    // console.log(select);
     setSelect2(select2);
   }, [select, select2]);
 
@@ -872,9 +872,9 @@ export default function index() {
 
   const is_there = (id: number, arr: any[]) => {
     const res = arr.includes(id);
-    // console.log(res);
-    // console.log(id);
-    // console.log(arr);
+    // // console.log(res);
+    // // console.log(id);
+    // // console.log(arr);
     if (res) {
       return "border-[0.09vw] bg-red-600 border-red-600";
     } else {

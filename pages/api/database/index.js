@@ -28,13 +28,13 @@ export default async function handler(req, res) {
   };
   const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;
 
-  console.log('===================== database / index.js =========================');
-  console.log(' >>>>>>>>>>> Database ==>', req.query.database);
-  console.log(' >>>>>>>>>>> collection ==>', req.query.collection);
+  // console.log('===================== database / index.js =========================');
+  // console.log(' >>>>>>>>>>> Database ==>', req.query.database);
+  // console.log(' >>>>>>>>>>> collection ==>', req.query.collection);
 
-  console.log('fetchOptions ======> ', fetchOptions)
-  console.log('fetchBody ======> ', fetchBody)
-  console.log('baseUrl ======> ', baseUrl)
+  // console.log('fetchOptions ======> ', fetchOptions)
+  // console.log('fetchBody ======> ', fetchBody)
+  // console.log('baseUrl ======> ', baseUrl)
 
   try {
     switch (req.method) {
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
           }),
         });
         const readDataJson = await readData.json();
-        console.log('findResult => readDataJson ============> ', readDataJson);
+        // console.log('findResult => readDataJson ============> ', readDataJson);
         res.status(200).json(readDataJson.documents);
         break;
 

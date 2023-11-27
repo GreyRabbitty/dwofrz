@@ -34,7 +34,7 @@ export function token_record(
       // );
 
 
-    //     console.log(address)
+    //     // console.log(address)
     //   const [associeted_token_account] = await web3.PublicKey.findProgramAddress(
     //     [
     //         address.toBuffer(),

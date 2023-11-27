@@ -29,6 +29,7 @@ export default async (req, res) => {
   const twitter = second_client.readWrite;
   try {
 
+    console.log('Trying to post Like to twitter')
     const result = await twitter.v2.like(token.sub ,tweet_id);
     return res.status(200).json({
       status: "Ok",

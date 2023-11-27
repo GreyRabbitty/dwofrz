@@ -42,7 +42,7 @@ const ConnectWalletModal = ({
         },
       },
       onFinish: (response) => {
-        console.log(response);
+        // console.log(response);
         setAddress(response.addresses[0].address);
         setXverse(response.addresses[1].address);
       },

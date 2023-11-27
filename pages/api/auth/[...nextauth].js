@@ -1,3 +1,4 @@
+import { CoPresentOutlined } from "@mui/icons-material";
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
@@ -5,18 +6,26 @@ export default NextAuth({
 
   providers: [
     Providers.Twitter({
-      clientId: 'EpKtxyByzbkcGGTWoQjecgzRH',
-      clientSecret: 'mWbvLSHbZ9z7Vf0mXTwvqHuKez44kqsOt4x0v4zhg0YD2R3eMF',
+      clientId: process.env.TWITTER_CONSUMER_KEY,
+      clientSecret: process.env.TWITTER_CONSUMER_SECRET,
+      // clientId: 'ETm3Dy9ruO8Q1BIEAwz3p6Xm5',
+      // clientSecret: 'rjBrBIopIW7ZzkRyStLdtuOaLmxHvOMZ9tuxWr2sNlH8TdqAxk',
+      // authorization: {
+      //   params: { scope: "tweet.read users.read  tweet.write" },
+      // },
     }),
+    
     // Providers.Discord({
     //   clientId: process.env.DISCORD_ID,
     //   clientSecret: process.env.DISCORD_PUBLIC_KEY,
     //   scope: "guilds"
     // }),
+    
   ],
 
   callbacks: {
     async signIn(user, account, profile) {
+      // console.log('account in sigiIn ===> ', account);
       return true
     },
     async session(session, user) {
@@ -24,12 +33,21 @@ export default NextAuth({
       return session
     },
     async jwt(token, user, account, profile, isNewUser) {
+      // console.log('account in jwt ===> ', account);
+      // console.log('token in jwt ===> ', token);
       if (user) {
         token.id = user.id
       }
+      if(account) {
+        token.twitter = account;
+        token.twitter.accessToken = process.env.TWITTER_ACCESS_TOKEN;
+        token.twitter.accessSecret = process.env.TWITTER_ACCESS_TOKEN_SECRET;
+        console.log('token after ====> ', token);
+      }
       return token
     }
+    
   },
 
-  secret: '3xUCasMVNlM0scpZ6Pe1ecmswHASaXrX4OwgnwgbpezPg',
+  secret: process.env.NEXTAUTH_SECRET,
 });

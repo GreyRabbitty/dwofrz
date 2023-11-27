@@ -235,7 +235,7 @@ export default function Topnavbar() {
         setDToken(0);
       }
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 
@@ -276,7 +276,7 @@ export default function Topnavbar() {
         setNFTs(null);
       }
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     } finally {
       setLoading(false);
     }
@@ -370,7 +370,7 @@ export default function Topnavbar() {
 
   async function getsolbalance() {
     const balance = await connection_sol.getBalance(AnchorWallet.publicKey);
-    console.log('AnchorWallet.publicKey  ===> ', AnchorWallet.publicKey.toBase58());
+    // console.log('AnchorWallet.publicKey  ===> ', AnchorWallet.publicKey.toBase58());
     setSolBalance((balance / 1000000000).toFixed(5));
   }
 
@@ -491,8 +491,8 @@ export default function Topnavbar() {
   const light =
     "dark:border dark:border-gray-800 dark:from-gray-200 dark:to-gray-200 dark:text-gray-800 ";
 
-  console.log(' ========================== Navbar ========================= ');
-  console.log('Session : ', session);
+  // console.log(' ========================== Navbar ========================= ');
+  // console.log('Session : ', session);
 
   return (
     <>

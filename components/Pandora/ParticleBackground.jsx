@@ -8,7 +8,7 @@ export default function ParticleBackground() {
   }, []);
 
   const particlesLoaded = React.useCallback(async (container) => {
-    // await console.log(container)
+    // await // console.log(container)
   }, []);
 
   return (

@@ -53,7 +53,7 @@ export default async function handler(req, res) {
             }),
           });
           const insertDataJson = await insertData.json();
-          console.log(insertDataJson)
+          // console.log(insertDataJson)
           res.status(200).json({
             status: "OK",
             index: 0

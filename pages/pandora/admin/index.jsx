@@ -50,7 +50,7 @@ const PandoraAdmin = () => {
     );
   };
 
-  // console.log(wallet);
+  // // console.log(wallet);
 
   const handleDateChange = (date) => {
     setValue("MintDate", date, { shouldValidate: true });

@@ -56,7 +56,7 @@ const PandoraMintSOL = () => {
   const { setVisible } = useWalletModal();
   const [nbrOutcome, setNbrOutcome] = useState(0);
 
-  // console.log(secondRow);
+  // // console.log(secondRow);
   const spinAudioRef = useRef(null);
   const WinAudioRef = useRef(null);
 
@@ -154,7 +154,7 @@ const PandoraMintSOL = () => {
     } catch (e) {
       notify_delete();
       notify_error("Transaction Failed!");
-      console.log(e);
+      // console.log(e);
     } finally {
       setButtonAllowed(false);
     }
@@ -204,7 +204,7 @@ const PandoraMintSOL = () => {
         endSpin(random);
       });
       // .catch((err) => {
-      //   console.log(err);
+      //   // console.log(err);
       //   return;
       // });
       // notify_delete()
@@ -231,14 +231,14 @@ const PandoraMintSOL = () => {
       // let num = randomNum();
       // const spinResult = await spinPandora(num);
       // const parseRes = JSON.parse(spinResult.data);
-      // console.log(parseRes);
+      // // console.log(parseRes);
       // if (!parseRes) {
       //   throw new Error("Something wrong here");
       // }
-      // console.log(parseRes);
-      // // console.log(getRandomInt1(9));
-      // // console.log(getRandomInt2(9));
-      // // console.log(randomTables[4][parseRes.array[0][2]]);
+      // // console.log(parseRes);
+      // // // console.log(getRandomInt1(9));
+      // // // console.log(getRandomInt2(9));
+      // // // console.log(randomTables[4][parseRes.array[0][2]]);
 
       // setFirstRow(randomTables[outcome][parseRes.array[2][2]]);
       // setSecondRow(
@@ -268,7 +268,7 @@ const PandoraMintSOL = () => {
       //   setButtonAllowed(false);
       // }, 4500);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
@@ -284,9 +284,9 @@ const PandoraMintSOL = () => {
       setFirstRow(parseRes.array[0]);
       setSecondRow(parseRes.array[1]);
       setThirdRow(parseRes.array[2]);
-      // console.log(getRandomInt1(9));
-      // console.log(getRandomInt2(9));
-      // console.log(randomTables[4][parseRes.array[0][2]]);
+      // // console.log(getRandomInt1(9));
+      // // console.log(getRandomInt2(9));
+      // // console.log(randomTables[4][parseRes.array[0][2]]);
 
       setFirstRow(randomTables[outcome][parseRes.array[2][2]]);
       setSecondRow(
@@ -318,7 +318,7 @@ const PandoraMintSOL = () => {
         setButtonAllowed(false);
       }, 3500);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
@@ -365,7 +365,7 @@ const PandoraMintSOL = () => {
         );
 
         const balance = await connection.getBalance(pandoraBoxPda);
-        console.log(balance);
+        // console.log(balance);
         if (balance > 0) {
           const provider = new anchor.AnchorProvider(connection, wallet, {
             preflightCommitment: "processed",
@@ -383,7 +383,7 @@ const PandoraMintSOL = () => {
 
               winners.map((winner) => {
                 if (winner.box == pandoraBoxPda.toBase58()) {
-                  console.log("winner");
+                  // console.log("winner");
                   box.is_winner = true;
                 }
               });
@@ -391,7 +391,7 @@ const PandoraMintSOL = () => {
               arr.push(box);
             }
           } catch (e) {
-            console.log(e);
+            // console.log(e);
           }
           try {
             const claimer_output = await program.account.pandoraBox.fetch(
@@ -405,7 +405,7 @@ const PandoraMintSOL = () => {
 
               winners.map((winner) => {
                 if (winner.box == pandoraBoxPda2.toBase58()) {
-                  console.log("winner");
+                  // console.log("winner");
                   box.is_winner = true;
                 }
               });
@@ -413,7 +413,7 @@ const PandoraMintSOL = () => {
               arr.push(box);
             }
           } catch (e) {
-            console.log(e);
+            // console.log(e);
           }
         } else {
           finishing = true;
@@ -421,10 +421,10 @@ const PandoraMintSOL = () => {
         i++;
       } while (i <= index);
       // } while (finishing == false);
-      console.log(arr);
+      // console.log(arr);
       setBoxes(arr);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 
@@ -445,13 +445,13 @@ const PandoraMintSOL = () => {
       notify_delete();
       if (confirmation.value.err) {
         notify_error("Transaction Failed!");
-        return console.log(confirmation.value.err);
+        return // console.log(confirmation.value.err);
       }
       notify_success("Transaction Successful!");
     } catch (e) {
       notify_delete();
       notify_error("Transaction Failed!");
-      console.log(e);
+      // console.log(e);
     }
   }
 
@@ -479,7 +479,7 @@ const PandoraMintSOL = () => {
           setClaimFund(true);
         }
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       } finally {
         setLoading(false);
       }
@@ -492,7 +492,7 @@ const PandoraMintSOL = () => {
         setCollName(res.data.name);
         setBoxesMinted(res.data.boxesMinted);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     getPandoraApi();

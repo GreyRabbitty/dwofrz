@@ -68,10 +68,10 @@ const ClaimModal = ({ open, close, pandora, wallet, xverse, address }) => {
       let sendTxOptions = {
         payload: btcPayload,
         onFinish: (response) => {
-          console.log(response);
+          // console.log(response);
         },
         onCancel: () => {
-          console.log("User cancelled transaction");
+          // console.log("User cancelled transaction");
         },
       };
 

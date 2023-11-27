@@ -46,7 +46,7 @@ export async function init_entry(
 
 
 
-    console.log("init stake entry");
+    // console.log("init stake entry");
 
         const tx = await program.methods.initEntry().accounts({
             stakeEntry: stake_entry,

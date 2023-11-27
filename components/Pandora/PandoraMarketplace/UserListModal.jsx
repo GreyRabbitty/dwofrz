@@ -49,7 +49,7 @@ const UserListModal = ({
         close(!open);
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }
 
@@ -64,7 +64,7 @@ const UserListModal = ({
         close(!open);
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }
 

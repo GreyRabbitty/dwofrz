@@ -8,7 +8,7 @@ import React, { useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
 
 const SpinResultModal = ({ opened, close, spinResult }) => {
-  // console.log(spinResult);
+  // // console.log(spinResult);
   // const [msg, setMsg] = useState("") ;
   var msg;
   switch (spinResult) {

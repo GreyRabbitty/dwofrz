@@ -115,7 +115,7 @@ const idl = require("../../../data/staking.json")
     //   initilized = false;
     // }
 
-    // console.log(banal);
+    // // console.log(banal);
 
 
 

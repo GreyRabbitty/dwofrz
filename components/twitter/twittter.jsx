@@ -1,3 +1,5 @@
+'use client'
+
 import GroupsIcon from "@mui/icons-material/Groups";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import Accordion from "@mui/material/Accordion";
@@ -36,6 +38,7 @@ import { useMetaplex } from "../MetaplexProvider/useMetaplex";
 import { get_claimer } from "../utils/claimers";
 import { DworfzHolderContext } from "../utils/dworfz_holder_context";
 import { nftContext } from "../utils/nft";
+import { instr_postTweet } from "../instraction/twitter/instraction/postTweet"
 
 export default function twittter({
   twitter_session,
@@ -194,7 +197,7 @@ export default function twittter({
 
   async function check(signal) {
     // if (participate) {
-    //   return console.log("already participated!");
+    //   return // console.log("already participated!");
     // }
 
     if (!live) {
@@ -260,10 +263,10 @@ export default function twittter({
     //       setIsRetweet(true);
     //       _retweet = true;
     //     } else {
-    //       // console.log("no the right retweet!");
+    //       // // console.log("no the right retweet!");
     //     }
     //   } else {
-    //     // console.log("this is not a retweet!");
+    //     // // console.log("this is not a retweet!");
     //   }
     // }
     if (_replay) {
@@ -283,8 +286,8 @@ export default function twittter({
     //     id,
     //   }),
     // }).then((res) => res.json());
-    // console.log("like");
-    // console.log(result);
+    // // console.log("like");
+    // // console.log(result);
     // CHECK LIKE
     if (is_like) {
       _like = true;
@@ -320,7 +323,6 @@ export default function twittter({
   }
   async function follow() {
 
-
     if (loading_action) {
       return
     }
@@ -335,12 +337,40 @@ export default function twittter({
     try {
       const results = await instr_follow(twitter_name);
       if (results.status == "ERR") {
-        notify_warning(results.message.errors[0].message);
+        notify_warning(results.message);
         throw results.message;
       }
       setIsFollow(true);
     } catch (e) {
-      // console.log(e);
+      // // console.log(e);
+      throw e;
+    } finally {
+      setLoandingAction(false);
+    }
+  }
+
+  async function postTweet() {
+    
+    if (loading_action) {
+      return
+    }
+    setLoandingAction(true);
+
+    if (participate) {
+      return;
+    }
+    if (!twitter_session) {
+      return notify_warning("connect twitter first!");
+    }
+    try {
+      const results = await instr_postTweet(replay);
+      if (results.status == "ERR") {
+        notify_warning(results.message);
+        throw results.message;
+      }
+      setIsFollow(true);
+    } catch (e) {
+      // // console.log(e);
       throw e;
     } finally {
       setLoandingAction(false);
@@ -620,8 +650,8 @@ export default function twittter({
           });
         }
         // <<<<<<< HEAD
-        //         console.log(nfts);
-        //         console.log(dworfz_mint);
+        //         // console.log(nfts);
+        //         // console.log(dworfz_mint);
 
         //         // if (dworfz_holder) {
                 if (nfts) {
@@ -1179,27 +1209,68 @@ export default function twittter({
                         <div className="mt-5 mx-auto max-w-[584px] px-10 lg:px-4 flex md:flex-row sm:flex-col justify-between items-center">
                           <div className="flex items-center justify-start -mt-1">
                             {/* ///////////////////////////////////////   T_POST  ///////////////////////////////// */}
+                            {/* Tweet */} 
+                            {method ? (
+                              (method == 3 || method == 4) && (
+                                // <Link
+                                // href="https://twitter.com/"
+                                // target="_blank"
+                                //   // onClick={() => !is_follow && follow()}
+                                //   className={`${btns} ${
+                                //     is_follow
+                                //       ? "text-[#0094FF]"
+                                //       : "text-white/40"
+                                //   }`}
+                                // >
+                                //   <BsTwitter />
+                                // </Link>
+
+                                <div 
+                                  onClick={() => postTweet()}
+                                  className={`${btns} ${
+                                        is_follow
+                                          ? "text-[#0094FF]"
+                                          : "text-white/40"
+                                      }`}
+                                >
+                                  <BsTwitter />
+                                </div>
+                              )
+                            ) : (
+                              <span></span>
+                            )}
                             {/* follow */} 
                             {method ? (
                               (method == 3 || method == 4) && (
-                                <Link
-                                href="https://twitter.com/"
-                                target="_blank"
-                                  // onClick={() => !is_follow && follow()}
+                                // <Link
+                                // href="https://twitter.com/"
+                                // target="_blank"
+                                //   // onClick={() => !is_follow && follow()}
+                                //   className={`${btns} ${
+                                //     is_follow
+                                //       ? "text-[#0094FF]"
+                                //       : "text-white/40"
+                                //   }`}
+                                // >
+                                //   <BsTwitter />
+                                // </Link>
+
+                                <div 
+                                  onClick={() => !is_follow && follow()}
                                   className={`${btns} ${
-                                    is_follow
-                                      ? "text-[#0094FF]"
-                                      : "text-white/40"
-                                  }`}
+                                        is_follow
+                                          ? "text-[#0094FF]"
+                                          : "text-white/40"
+                                      }`}
                                 >
                                   <BsTwitter />
-                                </Link>
+                                </div>
                               )
                             ) : (
                               <span></span>
                             )}
                             {/* like */}
-                            <Link
+                            {/* <Link
                             href="https://twitter.com/"
                             target="_blank"
                               // onClick={() => !is_like && like()}
@@ -1208,9 +1279,17 @@ export default function twittter({
                               }`}
                             >
                               <AiFillHeart />
-                            </Link>
+                            </Link> */}
+                            <div 
+                              className={`${btns} ${
+                                is_like ? "text-[#F91881]" : " text-white/40"
+                              }`}
+                              onClick={() => !is_like && like()}
+                            >
+                              <AiFillHeart />
+                            </div>
                             {/* retweet */}
-                            <Link
+                            {/* <Link
                               href="https://twitter.com/"
                               target="_blank"
                               // onClick={() => !is_retweet && retweet()}
@@ -1221,9 +1300,19 @@ export default function twittter({
                               <div className="rotate-90">
                                 <AiOutlineRetweet />
                               </div>
-                            </Link>
+                            </Link> */}
+                            <div 
+                              className={`${btns} ${
+                                is_retweet ? "text-[#00FF85]" : "text-white/40"
+                              }`}
+                              onClick={() => !is_retweet && retweet()}
+                            >
+                              <div className="rotate-90">
+                                <AiOutlineRetweet />
+                              </div>
+                            </div>
                             {/* replay */}
-                            <Link
+                            {/* <Link
                             href="https://twitter.com/"
                             target="_blank"
                               // onClick={() => !is_replay && Tweet()}
@@ -1232,7 +1321,15 @@ export default function twittter({
                               }`}
                             >
                               <BsFillChatFill />
-                            </Link>
+                            </Link> */}
+                            <div 
+                              className={`${btns} ${
+                                is_replay ? "text-[#2CCCFF]" : "text-white/40"
+                              }`}
+                              onClick={() => !is_replay && Tweet()}
+                            >
+                              <BsFillChatFill />
+                            </div>
                             {method ? (
                               method >= 2 &&
                               method <= 3 && (
@@ -1304,7 +1401,7 @@ export default function twittter({
                               <div className="flex items-center justify-between w-full font-semibold">
                                 <div className="text-sm">Requirement:</div>
                                 <div className="cursor-pointer sm:pl-2 md:pl-0 font-normal text-[var(--dwtwo)] dark:text-gray-800 text-[10px] md:text-sm ">
-                                  {/* {console.log(typeof(data.bundle))} */}
+                                  {/* {// console.log(typeof(data.bundle))} */}
                                   {data && data.bundle}
                                 </div>
                               </div>
@@ -1409,7 +1506,7 @@ export default function twittter({
                                           participated_user.map((users, i) => (
                                             <tr
                                               key={i}
-                                              className="border-b  border-white/30"
+                                              className="border-b border-white/30"
                                             >
                                               <th
                                                 scope="row"

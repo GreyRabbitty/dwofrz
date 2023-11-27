@@ -110,12 +110,12 @@ export async function claim(
     const reward_manager = new web3.PublicKey("8VEb9vg7yBGACmzQDPHV8kXJoCefk3pPARmWXMLiusjY");
 
 
-    // console.log("stake_entry: " + stake_entry.toBase58())
-    // console.log("stake_pool: " + stake_pool.toBase58())
-    // console.log("mint: " + mint.toBase58())
-    // console.log("reward_entry: " + reward_entry.toBase58())
-    // console.log("rewardDistributor: " + reward_distributor.toBase58())
-    // console.log("userRewardMintTokenAccount: " + userRewardMintTokenAccount.toBase58())
+    // // console.log("stake_entry: " + stake_entry.toBase58())
+    // // console.log("stake_pool: " + stake_pool.toBase58())
+    // // console.log("mint: " + mint.toBase58())
+    // // console.log("reward_entry: " + reward_entry.toBase58())
+    // // console.log("rewardDistributor: " + reward_distributor.toBase58())
+    // // console.log("userRewardMintTokenAccount: " + userRewardMintTokenAccount.toBase58())
 
         const tx3 = await program.methods.claim().accounts({
             rewardEntry: reward_entry,

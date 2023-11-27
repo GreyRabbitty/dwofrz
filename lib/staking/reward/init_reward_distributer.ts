@@ -97,7 +97,7 @@ export async function init_reward_distributor(
       },
       )
 
-      console.log("reward_distributor: " + reward_distributor.toBase58());
+      // console.log("reward_distributor: " + reward_distributor.toBase58());
 
         const tx = await program.methods.initRewardDistributors({
                 rewardAmount: new BN(reward_amount),

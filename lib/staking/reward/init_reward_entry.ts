@@ -27,10 +27,10 @@ export async function init_reward_entry(
         ],
         PROGRAM_ID
     );
-        console.log("init_reward_entry");
-        console.log(reward_entry.toBase58())
-        console.log(stake_entry.toBase58())
-        console.log(reward_distributor.toBase58())
+        // console.log("init_reward_entry");
+        // console.log(reward_entry.toBase58())
+        // console.log(stake_entry.toBase58())
+        // console.log(reward_distributor.toBase58())
         const tx = await program.methods.initRewardEntry().accounts({
             rewardEntry: reward_entry,
             stakeEntry: stake_entry,

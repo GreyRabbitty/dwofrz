@@ -29,7 +29,7 @@ const client = new Client({
 
 export default async function handle(req, res) {
 
-  console.log('================== api / program / sol / send_accept ===================');
+  // console.log('================== api / program / sol / send_accept ===================');
 
   try {
     const fetchOptions = {
@@ -71,11 +71,11 @@ export default async function handle(req, res) {
     // } else {
       const data = req.body.data;
 
-      console.log(' >>>>>>>> Data API deleteOne doing ');
+      // console.log(' >>>>>>>> Data API deleteOne doing ');
 
-      console.log('fetchOptions ===> ', fetchOptions);
-      console.log('fetchBody ===> ', fetchBody);
-      console.log('baseUrl ===> ', baseUrl);
+      // console.log('fetchOptions ===> ', fetchOptions);
+      // console.log('fetchBody ===> ', fetchBody);
+      // console.log('baseUrl ===> ', baseUrl);
 
       const deleteData = await fetch(`${baseUrl}/deleteOne`, {
         ...fetchOptions,
@@ -86,17 +86,17 @@ export default async function handle(req, res) {
       });
       const deleteDataJson = await deleteData.json();
 
-      console.log(' >>>>>>>> Data API deleteOne done, deleteDataJson ====> ', deleteDataJson);
+      // console.log(' >>>>>>>> Data API deleteOne done, deleteDataJson ====> ', deleteDataJson);
 
       fetchBody.database = "user_apply";
       fetchBody.collection = req.body.userb;
 
-      console.log(' >>>>>>>> Data API updateOne doing ');
+      // console.log(' >>>>>>>> Data API updateOne doing ');
 
-      console.log('fetchOptions ===> ', fetchOptions);
-      console.log('fetchBody ===> ', fetchBody);
-      console.log('baseUrl ===> ', baseUrl);
-      console.log('_id ===> ', data.user_id);
+      // console.log('fetchOptions ===> ', fetchOptions);
+      // console.log('fetchBody ===> ', fetchBody);
+      // console.log('baseUrl ===> ', baseUrl);
+      // console.log('_id ===> ', data.user_id);
 
       const user_info = await fetch(`${baseUrl}/updateOne`, {
         ...fetchOptions,
@@ -114,7 +114,7 @@ export default async function handle(req, res) {
 
       const readUserInfo = await user_info.json();
 
-      console.log(' >>>>>>>> Data API updateOne done, readUserInfo ====> ', readUserInfo);
+      // console.log(' >>>>>>>> Data API updateOne done, readUserInfo ====> ', readUserInfo);
                         
 
                         // if (readUserInfo) {
@@ -136,12 +136,12 @@ export default async function handle(req, res) {
       delete data._id;
       data.postAt = Date.now();
 
-      console.log(' >>>>>>>> Data API insertMany doing ');
+      // console.log(' >>>>>>>> Data API insertMany doing ');
 
-      console.log('fetchOptions ===> ', fetchOptions);
-      console.log('fetchBody ===> ', fetchBody);
-      console.log('baseUrl ===> ', baseUrl);
-      console.log('data ===> ', data);
+      // console.log('fetchOptions ===> ', fetchOptions);
+      // console.log('fetchBody ===> ', fetchBody);
+      // console.log('baseUrl ===> ', baseUrl);
+      // console.log('data ===> ', data);
 
       const insertData = await fetch(`${baseUrl}/insertMany`, {
         ...fetchOptions,
@@ -152,19 +152,19 @@ export default async function handle(req, res) {
       });
       const insertDataJson = await insertData.json();
 
-      console.log(' >>>>>>>> Data API insertMany done, insertDataJson ====> ', insertDataJson);
+      // console.log(' >>>>>>>> Data API insertMany done, insertDataJson ====> ', insertDataJson);
 
       fetchBody.database = "Notification";
       fetchBody.collection = req.body.userb;
 
       // // insert user data
 
-      console.log(' >>>>>>>> Data API insertMany doing ');
+      // console.log(' >>>>>>>> Data API insertMany doing ');
 
-      console.log('fetchOptions ===> ', fetchOptions);
-      console.log('fetchBody ===> ', fetchBody);
-      console.log('baseUrl ===> ', baseUrl);
-      console.log('data ===> ', data);
+      // console.log('fetchOptions ===> ', fetchOptions);
+      // console.log('fetchBody ===> ', fetchBody);
+      // console.log('baseUrl ===> ', baseUrl);
+      // console.log('data ===> ', data);
 
       const insertData_user = await fetch(`${baseUrl}/insertMany`, {
         ...fetchOptions,
@@ -174,7 +174,7 @@ export default async function handle(req, res) {
         }),
       });
 
-      console.log(' >>>>>>>> Data API insertMany done, insertData_user ====> ', insertData_user);
+      // console.log(' >>>>>>>> Data API insertMany done, insertData_user ====> ', insertData_user);
 
       if (data.native_coin) {
         switch (data.bundle) {
@@ -223,7 +223,7 @@ export default async function handle(req, res) {
       });
     // }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     res.status(500).json(e);
   }
 }

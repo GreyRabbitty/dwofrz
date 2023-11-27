@@ -50,7 +50,7 @@ const PandorasSOL = () => {
 
       setBoxes(Number(account.total));
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 

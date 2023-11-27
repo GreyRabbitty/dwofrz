@@ -94,7 +94,7 @@ const PandoraMintBTC = ({ stateValues }) => {
           startSpin();
         },
         onCancel: (res) => {
-          console.log("User cancelled transaction", res);
+          // console.log("User cancelled transaction", res);
         },
       };
       let tx = await sendWithXVerse(sendTxOptions);

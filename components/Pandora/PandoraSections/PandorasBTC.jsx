@@ -33,7 +33,7 @@ const PandorasBTC = () => {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 

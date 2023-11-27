@@ -40,6 +40,6 @@ export async function get_pool(
 
 
     } catch(e) {
-        console.log(e);
+        // console.log(e);
     }
 }

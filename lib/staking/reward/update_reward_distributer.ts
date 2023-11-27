@@ -45,7 +45,7 @@ export async function update_reward_distributor(
         PROGRAM_ID
     );
 
-      console.log("reward_distributor: " + reward_distributor.toBase58());
+      // console.log("reward_distributor: " + reward_distributor.toBase58());
 
         const tx = await program.methods.updateRewardDistributor({
                 rewardAmount: new BN(reward_amount),

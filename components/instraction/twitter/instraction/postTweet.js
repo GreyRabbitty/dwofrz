@@ -1,8 +1,8 @@
-export async function instr_follow(twitter_name) {
-  const results = await fetch("/api/twitter/post/follow", {
+export async function instr_postTweet(replay) {
+  const results = await fetch("/api/twitter/post/postTweet", {
       method: "POST",
       body: JSON.stringify({
-        twitter_name,
+        replay,
       }),
     })
     

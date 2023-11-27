@@ -98,7 +98,7 @@ export async function get_claim_amount(
 
 
     } catch(e) {
-        console.log(e);
+        // console.log(e);
     }
 }
 

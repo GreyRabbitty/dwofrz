@@ -17,7 +17,7 @@ export async function update_total_staked_seconds(
 
     // const PROGRAM_ID = new web3.PublicKey(idl.metadata.address)
     const program = new Program(idl, idl.metadata.address, provider);
-    console.log("update total stake secended");
+    // console.log("update total stake secended");
 
         const tx = await program.methods.updateTotalStakeSeconds().accounts({
             stakeEntry: stake_entry,

@@ -75,7 +75,7 @@ const tokenProgramAddr = new anchor.web3.PublicKey(
 
 // const getPandoras = () => {
 //   const tryGet = connection.getProgramAccounts(programId).then((res) => {
-//     console.log(res);
+//     // console.log(res);
 //   });
 // };
 
@@ -129,7 +129,7 @@ export const setupPandora = async (wallet, name, max, price, cm) => {
     tx1.sign(key);
 
     const signature = await wallet.sendTransaction(tx1, connection);
-    await connection.confirmTransaction(signature, "finalized"); // console.log(signedd_tx);
+    await connection.confirmTransaction(signature, "finalized"); // // console.log(signedd_tx);
     // addPandora(name, max, price, pandoraPDA, pandoraTokenAccount);
     const tx2 = await program.methods
       .setupPandora(collection_limit, name, bnPrice, candy_machine, name)
@@ -154,12 +154,12 @@ export const setupPandora = async (wallet, name, max, price, cm) => {
     // const hash = await connection.sendRawTransaction(signed_tx.serialize())
     // wallet.sendTransaction()
     // const account_info = await program.accounts.pandora.fetch(pandoraPDA)
-    // console.log(account_info);
-    // console.log(res)
+    // // console.log(account_info);
+    // // console.log(res)
     // })
     // .catch((err) => console.error(err));
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 
@@ -185,7 +185,7 @@ export const editPrice = async (
       })
       .rpc();
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 
@@ -213,7 +213,7 @@ export const openPandora = async (
       })
       .rpc();
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 
@@ -389,7 +389,7 @@ export const mintBox = async (
     const transaction = Transaction.from(serializedTx);
     return { transaction, pandoraBoxPda, program, random, number };
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 
@@ -434,7 +434,7 @@ export const revealBox = async (wallet, pandoraPDA, box) => {
       // const signature = await wallet.sendTransaction(ataTransaction, connection)
       // await connection.confirmTransaction(signature, "processed");
     }
-    console.log(box.toBase58());
+    // console.log(box.toBase58());
     await program.methods
       .reveal()
       .accounts({
@@ -460,7 +460,7 @@ export const revealBox = async (wallet, pandoraPDA, box) => {
 
     return tx;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 
@@ -485,7 +485,7 @@ export const closePandora = async (
       })
       .rpc();
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 
@@ -510,6 +510,6 @@ export const selectWinners = async (
       })
       .rpc();
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
