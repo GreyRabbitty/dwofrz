@@ -892,9 +892,9 @@ export default function twittter({
       if (!twitter_session) {
         return notify_warning("Connect your twitter first!");
       }
-      if (!session) {
-        return notify_warning("Connect your discord first!");
-      }
+      // if (!session) {
+      //   return notify_warning("Connect your discord first!");
+      // }
       let address;
       if (AnchorWallet) {
         address = AnchorWallet.publicKey.toBase58();
@@ -902,10 +902,15 @@ export default function twittter({
         address = account;
       }
 
+      console.log('address ==> ', address);
+      console.log('user_rate ==>', user_rate);
+      console.log('tweet_id ==>', tweet_id);
+
       await rate(address, user_rate, tweet_id);
       setIsDidntRate(false);
       notify_success("you have successfully rated!");
     } catch (e) {
+      console.log('rated error ==> ', e);
       notify_error("something went wrong please rate again later!");
     }
   }

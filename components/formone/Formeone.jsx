@@ -64,6 +64,7 @@ export default function Formeone() {
   const [project_image, setProjectImage] = useState();
   const [server_id, setServerId] = useState();
   const [amount, setAmount] = useState();
+  const [bundleAmount, setBundleAmount] = useState();
   const [claim, setClaim] = useState();
   const [disable, setdesable] = useState();
   const [refresh, setrefresh] = useState(false);
@@ -271,6 +272,13 @@ export default function Formeone() {
     notify_laoding("transaction pending...");
 
 
+    const applySol = amount + bundleAmount + (featured ? 1 : 0);
+
+    console.log('amount ===> ', amount);
+    console.log('bundleAmount ===> ', bundleAmount);
+    console.log('featured ===> ', featured);
+    console.log('applySol ===> ', applySol);
+
     // console.log("+++++++++++++++++++++++")
     try {
       await submit(
@@ -298,7 +306,9 @@ export default function Formeone() {
         affilate,
         affiliat_address,
         claim,
-        programable_config
+        programable_config,
+        wallet.sendTransaction,
+        applySol
       );
       // console.log('================ S T A R T ==================>')
 
@@ -1169,166 +1179,7 @@ export default function Formeone() {
                             />
                           </div>
                         </div> */}
-                          <div className="w-full my-4 tweetsid sm:ml-0">
-                            <div className="flex items-center justify-between w-full px-2">
-                              <div className="text-white">Select NFT:</div>
-                              <div className="group text-[#F1F8FD] relative">
-                                <span className="p-3 text-white  text-center rounded-lg absolute bg-gray-800 -top-[125px] -right-[30px] md:right-[50%] md:translate-x-[50%] w-80 scale-0 group-hover:scale-100 duration-300 delay-200 md:origin-bottom  origin-bottom-right z-50 ">
-                                  Use a wallet with less NFTs, Can only select
-                                  one NFT as reward, Cannot reward Token and NFT
-                                  together, have to select one reward.
-                                </span>
-                                <MdHelp className="text-[#aeb6bb]" />
-                              </div>
-                            </div>
-                            <div className="w-full mt-1 input ">
-                              <div
-                                onClick={() =>
-                                  setshowoptionsinput2(!showoptionsinput2)
-                                }
-                                className="px-4 w-full flex justify-between items-center cursor-pointer text-sm rounded-lg outline-none border focus:scale-y-105 transition-all py-2 h-[37px] border-[#D1D1D1] focus:border-red-600 bg-[#171717] text-white/60"
-                              >
-                                <div>
-                                  {nft === "Select" ? (
-                                    nft
-                                  ) : (
-                                    <div className="flex items-center text-xs">
-                                      {token == "Select" && selection >= 0 && (
-                                        <div>
-                                          <Image
-                                            src={
-                                              chain == "solana"
-                                                ? resource[selection].image
-                                                : active &&
-                                                  (eth_nft[
-                                                    selection
-                                                  ].rawMetadata.image.includes(
-                                                    "ipfs://"
-                                                  )
-                                                    ? eth_nft[
-                                                        selection
-                                                      ].rawMetadata.image.replaceAll(
-                                                        "ipfs://",
-                                                        "https://nftstorage.link/ipfs/"
-                                                      )
-                                                    : eth_nft[selection]
-                                                        .rawMetadata.image)
-                                            }
-                                            width={24}
-                                            height={30}
-                                            alt=""
-                                            className="mr-1 rounded-full"
-                                          />
-                                        </div>
-                                      )}
-                                      <div className="text-xs">
-                                        {nft.slice(0, 20)}
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                                <div
-                                  className={`-rotate-90 ${
-                                    showoptionsinput2 === true && "rotate-90"
-                                  }`}
-                                >
-                                  <MdOutlineArrowBackIosNew />
-                                </div>
-                              </div>
-                              {/*  */}
-                              {/*  */}
-                              {showoptionsinput2 && (
-                                <div className="fixed  top-0 left-0 w-screen h-screen z-[200] backdrop-blur-sm grid place-items-center">
-                                  <div
-                                    className="absolute top-0 left-0 w-screen h-screen -z-10"
-                                    onClick={() => setshowoptionsinput2(false)}
-                                  ></div>
-                                  <div className="md:w-[700px] sm:w-full h-[520px] rounded-xl bg-gradient-to-t from-[var(--dwtop)] to-[var(--dwtrakc)] p-[1.9px]">
-                                    <div className="w-full bg-gradient-to-t from-[#222222] to-[#2B2B36] rounded-xl h-full">
-                                      <div className="text-xl text-center">
-                                        Select your nft
-                                      </div>
-                                      <div
-                                        className="flex sm:justify-center md:justify-start px-3 flex-wrap overflow-y-scroll gap-2 h-[480px] mx-auto "
-                                        id="my-scrollable-component"
-                                      >
-                                        {chain == "solana"
-                                          ? resource &&
-                                            resource.map((nft) => (
-                                              // <div className="my-1 px-4 text-sm bg-[var(--dwtwo)] rounded-xl text-white cursor-pointer py-2"
-                                              <div
-                                                className="my-1 z-[500] text-center border border-white/60 rounded-xl w-[160px] h-fit text-sm text-white cursor-pointer "
-                                                onClick={() => {
-                                                  setRewardBundle("Select");
-                                                  setAmount(1);
-                                                  setSelection(nft.id);
-                                                  setnft(nft.name);
-                                                  setshowoptionsinput2(false);
-                                                  setToken("Select");
-                                                  setNativeCoin(false);
-                                                }}
-                                              >
-                                                <div>
-                                                  <Image
-                                                    src={nft.image}
-                                                    width={280}
-                                                    height={180}
-                                                    alt=""
-                                                    className=" rounded-xl"
-                                                  />
-                                                </div>
-                                                <div className="mt-1 font-semibold">
-                                                  {nft.name}
-                                                </div>
-                                              </div>
-                                            ))
-                                          : active &&
-                                            chain == "ETH" &&
-                                            eth_nft &&
-                                            eth_nft.map((nft, i) => (
-                                              // <div className="my-1 px-4 text-sm bg-[var(--dwtwo)] rounded-xl text-white cursor-pointer py-2"
-                                              <div
-                                                className="my-1 z-[500] text-center border border-white/60 rounded-xl w-[160px] text-sm text-white cursor-pointer h-fit min-h-[200px]"
-                                                onClick={() => {
-                                                  setIsNft(true);
-                                                  setAmount(1);
-                                                  setSelection(i);
-                                                  setnft(nft.title);
-                                                  setshowoptionsinput2(false);
-                                                  setToken("Select");
-                                                  setNativeCoin(false);
-                                                }}
-                                              >
-                                                <div>
-                                                  <Image
-                                                    src={
-                                                      nft.rawMetadata.image.includes(
-                                                        "ipfs://"
-                                                      )
-                                                        ? nft.rawMetadata.image.replaceAll(
-                                                            "ipfs://",
-                                                            "https://nftstorage.link/ipfs/"
-                                                          )
-                                                        : nft.rawMetadata.image
-                                                    }
-                                                    width={280}
-                                                    height={30}
-                                                    alt=""
-                                                    className="rounded-xl"
-                                                  />
-                                                </div>
-                                                <div className="mt-1 font-semibold">
-                                                  {nft.title}
-                                                </div>
-                                              </div>
-                                            ))}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </div>
+                         
                         </div>
                         <div className="mt-5">
                           <div className="z-0 flex items-center justify-between w-full md:flex-row sm:flex-col">
@@ -1484,6 +1335,7 @@ export default function Formeone() {
                                         onClick={() => {
                                           setBundle("Like comment retweet");
                                           setshowoptionsinput3(false);
+                                          setBundleAmount(1)
                                         }}
                                       >
                                         Like/comment/retweet
@@ -1498,6 +1350,7 @@ export default function Formeone() {
                                             "Like comment retweet follow"
                                           );
                                           setshowoptionsinput3(false);
+                                          setBundleAmount(1.25)
                                         }}
                                       >
                                         Like/comment/retweet/
@@ -1514,6 +1367,7 @@ export default function Formeone() {
                                             "like comment retweet join discord"
                                           );
                                           setshowoptionsinput3(false);
+                                          setBundleAmount(1.5)
                                         }}
                                       >
                                         Like/comment/retweet/
@@ -1531,6 +1385,7 @@ export default function Formeone() {
                                             "follow like comment retweet join discord"
                                           );
                                           setshowoptionsinput3(false);
+                                          setBundleAmount(2)
                                         }}
                                       >
                                         Like/comment/retweet/

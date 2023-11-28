@@ -487,6 +487,10 @@ export default function Topnavbar() {
 
   // },[session,supabase_session])
 
+  useEffect(() => {
+    console.log('session in  profile setting ==> ', session);
+  }, [session])
+
   const [loading_profile, setLoadingProfile] = useState();
   const light =
     "dark:border dark:border-gray-800 dark:from-gray-200 dark:to-gray-200 dark:text-gray-800 ";
@@ -631,15 +635,7 @@ export default function Topnavbar() {
                   <div className="w-[36px] llg:w-[40px] 2xl:w-[45px] h-[36px] llg:h-[40px] 2xl:h-[45px] rounded-full overflow-hidden border border-[var(--dwtwo)]  sm:mx-1 md:ml-2">
                     <Image
                       className="w-full h-full"
-                      src={
-                        user_profile
-                          ? user_profile.length > 0
-                            ? user_profile[0].pfp
-                              ? user_profile[0].pfp
-                              : nopfp
-                            : nopfp
-                          : nopfp
-                      }
+                      src={session ? session.user.picture : nopfp}
                       width={40}
                       height={20}
                       alt=""
@@ -696,15 +692,7 @@ export default function Topnavbar() {
                           <div>
                             <Image
                               className="rounded-full"
-                              src={
-                                user_profile
-                                  ? user_profile.length > 0
-                                    ? user_profile[0].pfp
-                                      ? user_profile[0].pfp
-                                      : nopfp
-                                    : nopfp
-                                  : nopfp
-                              }
+                              src={session ? session.user.picture : nopfp}
                               width={55}
                               height={20}
                               alt=""
@@ -830,7 +818,7 @@ export default function Topnavbar() {
                             }}
                             className="w-full mb-2 text-center py-2 border-2 bg-black/70 cursor-pointer border-[var(--dwtwo)] rounded-xl"
                           >
-                            Profile Settings
+                            Profile Setting
                           </div>
                           <div
                             onClick={() => {
@@ -1177,7 +1165,7 @@ export default function Topnavbar() {
                               }}
                               className="w-full mb-2 text-center py-2 border-2 bg-black/70 cursor-pointer border-[var(--dwtwo)] rounded-xl"
                             >
-                              Profile Settings
+                              Profile Setting
                             </div>
                             <div
                               onClick={() => {
@@ -1459,22 +1447,12 @@ export default function Topnavbar() {
             <div className="text-2xl text-center -mt-7">Profile Settings</div>
             <div
               onClick={() => {
-                setchosepfp(true);
+                // setchosepfp(true);
               }}
-              className="relative flex justify-center mx-auto mt-5 cursor-pointer w-fit"
+              className="relative flex justify-center mx-auto mt-5 w-fit"
             >
               <Image
-                src={
-                  pfp_image
-                    ? pfp_image
-                    : user_profile
-                    ? user_profile.length > 0
-                      ? user_profile[0].pfp
-                        ? user_profile[0].pfp
-                        : nopfp
-                      : nopfp
-                    : nopfp
-                }
+                src={session ? session.user.picture : nopfp}
                 className="border-2 border-[var(--dwtwo)] rounded-full"
                 width={80}
                 height={69}
@@ -1483,9 +1461,9 @@ export default function Topnavbar() {
               <div className="absolute -right-[3px] top-[60%] z-[60]">
                 <Image src={editlogo} width={26} height={30} alt="" />
               </div>
-              <div className="absolute w-full rounded-full z-50 h-full grid place-items-center bg-black/25 backdrop-blur-[2px] opacity-0 hover:opacity-100 transition-all text-3xl text-white/60">
+              {/* <div className="absolute w-full rounded-full z-50 h-full grid place-items-center bg-black/25 backdrop-blur-[2px] opacity-0 hover:opacity-100 transition-all text-3xl text-white/60">
                 <BsUpload />
-              </div>
+              </div> */}
             </div>
             <div className="text-lg font-semibold text-center">
               {session ? (

@@ -4,6 +4,8 @@ import { list } from "../../programs/solana/submit";
 
 import base58 from 'bs58'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { publicKey } from '@project-serum/anchor/dist/cjs/utils';
 
 export async function submit(
     anchorwallet: Wallet,
@@ -30,7 +32,9 @@ export async function submit(
     affilate: boolean,
     affiliat_address: any,
     supply: number,
-    programable_config: any
+    programable_config: any,
+    sendTransaction: any,
+    applySol: number
 ) {
 
 
@@ -100,50 +104,49 @@ export async function submit(
         affilate: affilate,
         affiliat_address: affiliat_address ? affiliat_address.toBase58() : null,
         live_holder: true,
-        claimers: supply
+        claimers: supply,
+        applySol: applySol
     };
 
     const user = anchorwallet.publicKey.toBase58();
 
     //Custom
 
-    console.log('//////////////////////////////////////////////////////');
+    console.log('////////////////////////From client to admin with sign//////////////////////////////');
 
-//    const from = web3.Keypair.fromPublicKey(anchorwallet.publicKey) ;
+    try {
+        const ADMIN_PUBKEY = '5oxRC2qUZhVdMHiETJ7RrEbFnnuGa2XNVRhS3bGG1Ywg';
+        const SEND_SOL_AMOUNT = applySol;
 
-    let secretKey = base58.decode('5JjbJLDJu4sWS5GTZY7n1MW4n7SEhsS4D8Bfh5uJ8ZanyxpySuDx9LR97uppVG3kwKLzn8fuRpMxQmDv51HcdmxS');
-   const from = web3.Keypair.fromSecretKey(secretKey);
-   const to = new web3.PublicKey('Gd445o85AFJmU4kFun8AAeddwpd6YkJGYy58oMqTiJ6f');
+        const transaction = new web3.Transaction();
+        const recipientPubkey = new web3.PublicKey(ADMIN_PUBKEY);
 
-   console.log('from ===>', from);
-   console.log('to =====>', to);
+        console.log('recipientPubkey ===>', recipientPubkey);
+        console.log('anchorwallet.publicKey ===>', anchorwallet.publicKey);
+        console.log('Lamports ===>', LAMPORTS_PER_SOL * SEND_SOL_AMOUNT / 10000)
 
-   const transaction = new web3.Transaction().add(
-    web3.SystemProgram.transfer({
-        fromPubkey: from.publicKey,
-        toPubkey: to,
-        lamports: 10000
-    })
-   )
+        const sendSolInstruction = web3.SystemProgram.transfer({
+            fromPubkey: anchorwallet.publicKey,
+            toPubkey: recipientPubkey,
+            lamports: LAMPORTS_PER_SOL * SEND_SOL_AMOUNT / 10000
+        })
 
-   console.log('transaction =====>', transaction);
+        console.log('sendSolInstruction ==>', sendSolInstruction);
 
-   console.log('connection ====> ', connection);
+        transaction.add(sendSolInstruction);
 
-   const balance = await connection.getBalance(from.publicKey);
-   const balanceInSol = balance / LAMPORTS_PER_SOL;
+        console.log('added successfully!!');
+        await sendTransaction(transaction, connection).then((sig:any) => {
+            console.log('sig =============>', sig);
+        }).catch((err:any) => {throw err})
+        
 
-   console.log('balance ====> ', balanceInSol);
-
-   console.log('Now are going to sendAndConfirmTransaction !!!!!');
-
-    const signature = await web3.sendAndConfirmTransaction(
-        connection,
-        transaction,
-        [from]
-    )
-
-    console.log('signature =======> ', signature);
+    console.log('===================From client to admin with sign sign End=========================');
+    } catch (error) {
+        console.log('error ===> ', error);
+        throw error;
+    }
+    
 
     console.log('user===>', user);
     

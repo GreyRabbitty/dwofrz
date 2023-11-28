@@ -23,6 +23,8 @@ export default async function handler(req, res) {
 
     const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;
 
+    console.log('fetchBody in rate.js =====> ', fetchBody);
+
 
     try {
         const token = await getToken({
@@ -30,9 +32,14 @@ export default async function handler(req, res) {
             secret: process.env.NEXTAUTH_SECRET,
           });
           const supabase = createServerSupabaseClient({req, res})
+
+          console.log('supabase ===> ', supabase)
           const {
             data: { session },
           } = await supabase.auth.getSession()
+
+          console.log('session ===> ', session);
+          console.log('session ===> ', token);
           
           if (!token) {
             return res.status(401).json({
@@ -40,12 +47,15 @@ export default async function handler(req, res) {
               message: "connect your twitter first"
             })
           }
-          if (!session) {
-            return res.status(401).json({
-              status: "ERR",
-              message: "connect your discord first"
-            })
-          }
+
+          
+          //TODO
+          // if (!session) {
+          //   return res.status(401).json({
+          //     status: "ERR",
+          //     message: "connect your discord first"
+          //   })
+          // }
           
         // verify if the user is the one that we want him to be [owner]
         // var enc = new TextEncoder(); // always utf-8
@@ -94,7 +104,7 @@ export default async function handler(req, res) {
             rate: req.body.rate,
             // address: pubkey,
             twitter_id:  token.sub,
-            discord_id: session.user.user_metadata.sub
+            // discord_id: session.user.user_metadata.sub //TODO
         }
 
 

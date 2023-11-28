@@ -28,6 +28,8 @@ export default function tasks() {
   const [feature, setFeature] = useState(false);
   const [selected_tweet, setSelectedTweet] = useState();
 
+  const [count, setCount] = useState()
+;
   const AnchorWallet = useAnchorWallet();
   const wallet = useWallet();
 
@@ -208,6 +210,8 @@ export default function tasks() {
   async function reload_data() {
     setrefresh(false);
     setdesable(false);
+    get_tweets();
+    get_data();
   }
 
   const notify_success = (msg) => {
@@ -391,7 +395,7 @@ export default function tasks() {
                                   )
                                 ) : tweet.network == "solana" &&
                                   tweet.native_coin ? (
-                                  <div>{tweet.amount} SOL</div>
+                                  <div>{tweet.applySol} SOL</div>
                                 ) : tweet.nft ? (
                                   <Link
                                     href={`https://magiceden.io/item-details/${tweet.nft_address}`}
@@ -401,10 +405,10 @@ export default function tasks() {
                                   </Link>
                                 ) : (
                                   <Link
-                                    href={`https://solscan.io/address//${tweet.token_address}`}
+                                    href={`https://solscan.io/address/${tweet.token_address}`}
                                     target={"_blank"}
                                   >
-                                    {tweet.amount} {tweet.token_name}
+                                    {tweet.applySol} {tweet.token_name}
                                   </Link>
                                 )}
                               </td>
@@ -666,7 +670,7 @@ export default function tasks() {
                               </div>
                             )
                           ) : tweet.network == "solana" && tweet.native_coin ? (
-                            <div>{tweet.amount} SOL</div>
+                            <div>{tweet.applySol} SOL</div>
                           ) : tweet.nft ? (
                             <Link
                               href={`https://magiceden.io/item-details/${tweet.nft_address}`}
@@ -679,7 +683,7 @@ export default function tasks() {
                               href={`https://solscan.io/address//${tweet.token_address}`}
                               target={"_blank"}
                             >
-                              {tweet.amount} {tweet.token_name}
+                              {tweet.applySol} {tweet.token_name}
                             </Link>
                           )}
                         </td>

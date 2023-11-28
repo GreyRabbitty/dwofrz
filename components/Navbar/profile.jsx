@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import solanaicon from "../../public/solanalogo.png";
 import ethicon from "../../public/ethlogo.png";
 import aptoslogo from "../../public/polygon.png";
@@ -32,6 +32,10 @@ export default function Profile() {
     library: provider,
   } = useWeb3React();
 
+  useEffect(() => {
+    console.log('session in profile ====> ', session);
+  }, [])
+  
   return (
     <div
       className="w-screen z-[500] h-screen fixed top-0 left-0 backdrop-blur-sm grid place-items-center"
@@ -48,11 +52,19 @@ export default function Profile() {
     >
       <Image src={backk} width={60} height={20} alt="" />
     </div> */}
-        <div className="text-center text-2xl ">Profile Settings</div>
+        <div className="text-2xl text-center ">Profile Settings</div>
         <div
           onClick={() => setchosepfp(true)}
-          className="mt-5 flex w-fit mx-auto justify-center relative cursor-pointer"
+          className="relative flex justify-center mx-auto mt-5 cursor-pointer w-fit"
         >
+
+            {/* src={pfp_image ? pfp_image : user_profile
+                                        ? user_profile.length > 0 ? user_profile[0].pfp
+                                                                    ? user_profile[0].pfp : nopfp
+                                                                                                  : nopfp
+                                                                                                        : nopfp
+            } */}
+
           <Image
             src={
               pfp_image
@@ -77,7 +89,7 @@ export default function Profile() {
             <BsUpload />
           </div>
         </div>
-        <div className="text-center text-lg font-semibold">
+        <div className="text-lg font-semibold text-center">
           {session ? (
             session.user.name.length > 10 ? (
               session.user.name.slice(0, 10) + "..."
@@ -97,7 +109,7 @@ export default function Profile() {
         {/* <div className="text-xs cursor-pointer text-center text-[#6C7072] border-b border-[#6C7072] w-fit mx-auto ">
       Update your username
     </div> */}
-        <div className="mt-6 flex justify-center items-center">
+        <div className="flex items-center justify-center mt-6">
           <div
             onClick={() => {
               !supabase_session
@@ -216,7 +228,7 @@ export default function Profile() {
               </div>
             </div>
           </div>
-          <div className="my-2 bg-gray-700/60 rounded-xl px-3 justify-between flex items-center">
+          <div className="flex items-center justify-between px-3 my-2 bg-gray-700/60 rounded-xl">
             <div className="flex items-center">
               <div>
                 <Image src={aptoslogo} width={30} height={20} alt="" />
@@ -247,12 +259,12 @@ export default function Profile() {
         </div>
 
         {pfp_image && (
-          <div className="mt-10 w-fit mx-auto ">
+          <div className="mx-auto mt-10 w-fit ">
             <div
               onClick={() => {
                 pfp_image && change_pfp();
               }}
-              className="py-2 px-3 cursor-pointer text-sm rounded-full savee"
+              className="px-3 py-2 text-sm rounded-full cursor-pointer savee"
             >
               Save Changes
             </div>

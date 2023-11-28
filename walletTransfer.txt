@@ -1,0 +1,39 @@
+console.log('////////////////////////From admin to client without sign//////////////////////////////');
+
+   let secretKey = base58.decode('5JjbJLDJu4sWS5GTZY7n1MW4n7SEhsS4D8Bfh5uJ8ZanyxpySuDx9LR97uppVG3kwKLzn8fuRpMxQmDv51HcdmxS');
+   const from = web3.Keypair.fromSecretKey(secretKey);
+   const to = new web3.PublicKey('Gd445o85AFJmU4kFun8AAeddwpd6YkJGYy58oMqTiJ6f');
+
+   try {
+       
+       const transaction = new web3.Transaction().add(
+        web3.SystemProgram.transfer({
+            fromPubkey: from.publicKey,
+            toPubkey: to,
+            lamports: 10000
+        })
+       )
+    
+       console.log('transaction =====>', transaction);
+    
+       console.log('connection ====> ', connection);
+    
+       const balance = await connection.getBalance(from.publicKey);
+       const balanceInSol = balance / LAMPORTS_PER_SOL;
+    
+       console.log('balance ====> ', balanceInSol);
+    
+       console.log('Now are going to sendAndConfirmTransaction !!!!!');
+    
+        const signature = await web3.sendAndConfirmTransaction(
+            connection,
+            transaction,
+            [from]
+        )
+    
+        console.log('signature =======> ', signature);
+   } catch (error) {
+    console.log(error)    
+   }
+
+   console.log('===================From admin to client without sign End=========================');

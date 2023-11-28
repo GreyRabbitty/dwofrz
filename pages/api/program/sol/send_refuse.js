@@ -32,36 +32,36 @@ export default async function handle(req, res) {
         // await new Promise(f => setTimeout(f, 10000))
 
 
-        const serialized = req.body.serializing_tx;
+        // const serialized = req.body.serializing_tx;
 
-        const buffer_tx = Buffer.from(serialized, 'base64');
+        // const buffer_tx = Buffer.from(serialized, 'base64');
 
-        const txv = web3.Transaction.from(buffer_tx);
+        // const txv = web3.Transaction.from(buffer_tx);
 
         // return res.status(200).json({
         //   message: "what the hello you see",
         //   tx: txv
         // })
-        const rpc = process.env.RPC
-        const connection = new web3.Connection(rpc, {
-            confirmTransactionInitialTimeout: 2147483647
-        });
+        // const rpc = process.env.RPC
+        // const connection = new web3.Connection(rpc, {
+        //     confirmTransactionInitialTimeout: 2147483647
+        // });
 
-        const hash = await connection.sendRawTransaction(
-            buffer_tx,
-            {
-                skipPreflight: true
-            }
-        );
+        // const hash = await connection.sendRawTransaction(
+        //     buffer_tx,
+        //     {
+        //         skipPreflight: true
+        //     }
+        // );
 
-        const confirmation = await connection.confirmTransaction(hash, "confirmed");
+        // const confirmation = await connection.confirmTransaction(hash, "confirmed");
 
 
 
-        if (confirmation.value.err) {
-            res.status(500).json(confirmation.value.err)
-        }
-        else {
+        // if (confirmation.value.err) {
+        //     res.status(500).json(confirmation.value.err)
+        // }
+        // else {
             const data = req.body.data
             const deleteData = await fetch(`${baseUrl}/deleteOne`, {
                 ...fetchOptions,
@@ -120,10 +120,11 @@ export default async function handle(req, res) {
                 deleteDataJson: deleteDataJson
                 // updateData: updateDataJson
             })
-        }
+        // }
     }
     catch(e) {
         // console.log(e)
+        console.log('error ==> ', e);
         res.status(500).json(e)
     }
 }
