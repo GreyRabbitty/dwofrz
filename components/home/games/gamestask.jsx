@@ -116,13 +116,13 @@ export default function gamestask() {
                     <span className="truncate">0 / 500</span>
                   </div>
                   {/* Error */}
-                  <Image
-                    src={'https://media.discordapp.net/attachments/1085293900706627595/1086248228221104210/unsplash_-SmCKTIcH5E_8.png'}
+                  {/* <Image
+                    src={el.img}
                     width={400}
                     height={400}
                     alt=""
                     className="object-cover object-center w-full h-full"
-                  />
+                  /> */}
                 </div>
 
                 <div

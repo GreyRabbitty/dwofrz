@@ -140,6 +140,7 @@ export default function twittter({
       setLive(false);
       start_raffel(signal);
     } else {
+      
       setFinishTime(Number(data.postAt) + finish_times);
       setLive(true);
     }

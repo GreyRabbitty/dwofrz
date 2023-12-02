@@ -1,6 +1,7 @@
 export function get_remainig_time(time, posting_days) {
   const now = Date.now();
   const posting_time = 24 * 60 * 60 * 1000 * posting_days;
+  
   const finish = time + posting_time;
   if (now >= finish) return "FINISH";
   const ramaining_time = finish - now;

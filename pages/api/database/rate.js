@@ -50,12 +50,12 @@ export default async function handler(req, res) {
 
           
           //TODO
-          // if (!session) {
-          //   return res.status(401).json({
-          //     status: "ERR",
-          //     message: "connect your discord first"
-          //   })
-          // }
+          if (!session) {
+            return res.status(401).json({
+              status: "ERR",
+              message: "connect your discord first"
+            })
+          }
           
         // verify if the user is the one that we want him to be [owner]
         // var enc = new TextEncoder(); // always utf-8
@@ -72,7 +72,7 @@ export default async function handler(req, res) {
         // )
 
         // const signature = req.body.seg;
-        // const pubkey = req.body.address
+        const pubkey = req.body.address
 
         // const result = nacl.sign.detached.verify(signData, bs58.decode(signature), pubkey.toBuffer())
 
@@ -102,9 +102,9 @@ export default async function handler(req, res) {
 
         const rate = {
             rate: req.body.rate,
-            // address: pubkey,
+            address: pubkey,
             twitter_id:  token.sub,
-            // discord_id: session.user.user_metadata.sub //TODO
+            discord_id: session.user.user_metadata.sub //TODO
         }
 
 

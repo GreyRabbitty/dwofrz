@@ -34,7 +34,8 @@ export default async function handler(req, res) {
             }),
         });
         const readUserInfo = (await user_info.json()).document;
-        const finish_times = 24 * 60 * 60 * 1000 * 2;
+        // const finish_times = 24 * 60 * 60 * 1000 * 2;
+        const finish_times = 5 * 60 * 1000;
 
         if (readUserInfo) {
             if (!readUserInfo.live) {

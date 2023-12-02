@@ -32,6 +32,8 @@ export const CountdownTimer = ({ countdownTimestampMs, finish, width }) => {
       setshowloading(false);
     }, 2000);
 
+    console.log('countdownTimestampMs ===> ', countdownTimestampMs);
+
     return () => {
       time;
     };
