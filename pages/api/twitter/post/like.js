@@ -18,6 +18,7 @@ export default async (req, res) => {
       message: "you are not allowed"
     })
   }
+
   const second_client = new TwitterApi({
     appKey: process.env.TWITTER_CONSUMER_KEY,
     appSecret: process.env.TWITTER_CONSUMER_SECRET,
@@ -29,6 +30,9 @@ export default async (req, res) => {
   const twitter = second_client.readWrite;
   try {
 
+    console.log("Twitter ======> ", twitter);
+    console.log("token.sub ======> ", token.sub);
+    console.log("tweet_id ======> ", tweet_id);
     console.log('Trying to post Like to twitter')
     const result = await twitter.v2.like(token.sub ,tweet_id);
     return res.status(200).json({

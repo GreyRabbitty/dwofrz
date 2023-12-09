@@ -411,7 +411,7 @@ export default function twittter({
         }
       }
       
-      async function like() {
+  async function like() {
         if (participate) {
       return;
     }
@@ -1215,7 +1215,17 @@ export default function twittter({
                         <div className="mt-5 mx-auto max-w-[584px] px-10 lg:px-4 flex md:flex-row sm:flex-col justify-between items-center">
                           <div className="flex items-center justify-start -mt-1">
                             {/* ///////////////////////////////////////   T_POST  ///////////////////////////////// */}
-                            {/* Tweet */} 
+                            {/* following */} 
+                            <div 
+                              onClick={() => !is_follow && follow()}
+                              className={`${btns} ${
+                                    is_follow
+                                      ? "text-[#0094FF]"
+                                      : "text-white/40"
+                                  }`}
+                            >
+                              <BsTwitter />
+                            </div>
                             {method ? (
                               (method == 3 || method == 4) && (
                                 // <Link
@@ -1232,7 +1242,7 @@ export default function twittter({
                                 // </Link>
 
                                 <div 
-                                  onClick={() => postTweet()}
+                                  onClick={() => follow()}
                                   className={`${btns} ${
                                         is_follow
                                           ? "text-[#0094FF]"

@@ -41,10 +41,10 @@ export default NextAuth({
       if(account) {
         console.log('account ===> ', account);
         token.twitter = account;
-        token.twitter.accessToken = process.env.TWITTER_ACCESS_TOKEN;
-        token.twitter.accessSecret = process.env.TWITTER_ACCESS_TOKEN_SECRET;
         console.log('token after ====> ', token);
       }
+
+      
       return token
     }
     

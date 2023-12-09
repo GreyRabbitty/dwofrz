@@ -2,80 +2,50 @@
 import { getSession } from "next-auth/client";
 import { getToken } from "next-auth/jwt";
 import { TwitterApi } from 'twitter-api-v2';
-import OAuth from "oauth-1.0a";
-import { createHmac } from "crypto";
-import request from "request";
-
-const oauth = new OAuth({
-  consumer: {
-    key: process.env.TWITTER_CONSUMER_KEY,
-    secret: process.env.TWITTER_CONSUMER_SECRET,
-  },
-  signature_method: "HMAC-SHA1",
-  hash_function(base_string, key) {
-    return createHmac("sha1", key).update(base_string).digest("base64");
-  },
-});
-
-const request_data = {
-  url: "https://api.twitter.com/2/tweets",
-  method: "POST",
-};
 
 export default async (req, res) => {
   const body = JSON.parse(req.body);
   const { twitter_name } = body;
 
-  // const session = await getSession({ req });
+  const session = await getSession({ req });
   const token = await getToken({
     req,
     secret: process.env.NEXTAUTH_SECRET,
   });
-  console.log("token ===========>", token);
 
-  const tokenByUser = {
-    key: token.twitter.accessToken,
-    secret: token.twitter.refreshToken,
-  }
+  // const client = new Twitter({
+  //   subdomain: "api",
+  //   consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  //   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  //   access_token_key: token.twitter.accessToken,
+  //   access_token_secret: token.twitter.refreshToken,
+  // });
 
-  console.log("tokenByUser ===========>", tokenByUser);
+  const second_client = new TwitterApi({
+    appKey: process.env.TWITTER_CONSUMER_KEY,
+    appSecret: process.env.TWITTER_CONSUMER_SECRET,
+    accessToken: token.twitter.accessToken,
+    accessSecret: token.twitter.refreshToken
+  })
+
 
   try {
+    // const results = await client.post("friendships/create", {
+    //   screen_name: twitter_name,
+    // });
 
-    const result = await new Promise((resolve, reject) => {
-      request(
-        {
-          url: "https://api.twitter.com/2/tweets",
-          method: request_data.method,
-          headers: {
-          ...oauth.toHeader(oauth.authorize(request_data, tokenByUser)),
-          "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            text: "Good Sunday!!! Happy Weekend to you.",
-          }),
-        },
-        function (error, response, body) {
-          if (!error && (response.statusCode === 200 || response.statusCode === 201)) {
-            console.log("Tweet posted!");
-            console.log("Body: ", body);
-            resolve(JSON.parse(body));
-          } else {
-            console.log("tweetWithImage Error: ", error);
-            console.log("Status code: ", response.statusCode);
-            console.log("Body: ", body); // Print the response
-            reject(error || new Error(`Status code: ${response.statusCode}`));
-          }
-        }
-      );
+    const twitter = second_client.readWrite
+    const rest = await twitter.v2.usersByUsernames(twitter_name)
+    await twitter.v2.follow(token.sub, rest.data[0].id)
+
+    return res.status(200).json({
+      status: "Ok",
     });
-    console.log("====>>>>", result);
-
-    res.send(result);
   } catch (e) {
-    console.log('post error ==> ', e);
-    return res.status(400).json({
-      status: e.message,
-    });
+    // console.log(e)
+    return res.status(500).json({
+      status: "ERR", 
+      message: e
+      });
   }
 };
