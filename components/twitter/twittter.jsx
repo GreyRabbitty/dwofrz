@@ -186,6 +186,17 @@ export default function twittter({
     get_claimers();
   }, [AnchorWallet]);
 
+  const refreshParty = async() => {
+    notify_laoding('Updating the participating data..')
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    await enter_raffle();
+    await get_participated(signal);
+    notify_delete();
+    notify_success('Updating is done, successfully..')
+  }
+
   async function get_claimers() {
     try {
       if (!AnchorWallet) return;
@@ -563,6 +574,7 @@ export default function twittter({
       data.bundle == "like comment retweet join discord" ||
       data.bundle == "follow like comment retweet join discord"
     ) {
+      console.log('is_in_the _server session ==> ', session);
       if (!session) {
         notify_warning('Please connect to discord!')
         return disco
@@ -1319,12 +1331,10 @@ export default function twittter({
                                 <Link
                                   href={`${data && data.discord_url}`}
                                   onClick={() => {
-                                    const checkDiscord = setInterval(() => {
-                                      is_in_the_server();
-                                    }, 1000)
-                                    if(is_discord) {
-                                      clearInterval(checkDiscord); 
-                                    }
+                                    is_in_the_server();
+                                    setTimeout(() => {
+                                      check();
+                                    }, 5000)
                                   }}
                                   target="_blank"
                                   className={`${btns} ${
@@ -1544,7 +1554,7 @@ export default function twittter({
             <div className="py-5">
               {live && is_aligible && !participate && (
                 <div
-                  onClick={() => live && !participate && enter_raffle()}
+                  onClick={() => live && !participate && refreshParty() }
                   className="w-fit px-12 mx-auto text-black text-base text-center py-2 rounded-full cursor-pointer bg-gradient-to-t from-[#FFA800] to-[#FFDAA4] hover:scale-105 transition-all"
                 >
                   Participate
