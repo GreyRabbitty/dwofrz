@@ -2,6 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { TwitterApi } from 'twitter-api-v2';
 
 export default async (req, res) => {
+  console.log('API TWITTER FOLLOW ====>');
   const body = JSON.parse(req.body);
   const { name } = body;
 
@@ -30,18 +31,22 @@ export default async (req, res) => {
   try {
     const twitter = second_client.readWrite
 
+    console.log('<=== API twitter twitter.v2.following is ready ===>')
+    console.log('<=== API twitter token.sub ===>', token.sub)
     const result = await twitter.v2.following(token.sub, {
       max_results: 300
     });
     // // console.log(result.data.length);
 
-    // // console.log(result);
+    console.log('twitter.v2.following result ==>', result);
     let follow = false;
     result.data.map((_twitter) => {
       if (name == _twitter.name) {
         follow = true;
       }
     })
+
+    console.log('twitter_follower ===>', result.data);
 
     // const results = await client.get("users/show", {
     //   screen_name: query,
@@ -54,7 +59,7 @@ export default async (req, res) => {
       follow: follow,
     });
   } catch (e) {
-    // console.log(e)
+    console.log('api follow 400 errors ===>', e)
     return res.status(400).json({
       status: "ERR",
     });

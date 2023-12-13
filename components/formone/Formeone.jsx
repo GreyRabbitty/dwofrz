@@ -19,6 +19,10 @@ import { submit_eth } from "../instraction/ETH/submit";
 import { submit } from "../instraction/solana/submit";
 import { nftContext } from "../utils/nft";
 import { Wait_approve } from "./wait_approve";
+import * as auth from "@supabase/auth-helpers-react";
+import {joinDiscordServer} from '../instraction/discord/joinServer'
+
+
 export default function Formeone() {
   const AnchorWallet = useAnchorWallet();
   const wallet = useWallet();
@@ -30,6 +34,9 @@ export default function Formeone() {
   );
   // const connection = new web3.Csdvzsvonnection(web3.clusterApiUrl("devnet"));
   const { active, account, library: provider } = useWeb3React();
+
+  const supabase = auth.useSupabaseClient();
+  const supabase_session = auth.useSession();
 
   const onifunc = () => {
     if (firstinput === true) {
@@ -207,9 +214,17 @@ export default function Formeone() {
       if (!discord_constact || !discord_url || !server_id) {
         return notify_warning("Complete the Requirements first!");
       }
+      
     }
     let affilate = false;
     let affiliat_address = null;
+
+    if (twitter_url.includes("https://twitter.com/")) {
+      
+    } else {
+      setTwitterURL("");
+      return notify_warning("Invalid Twitter Url..");
+    }
 
     try {
       // https:ragnarok.dworfz/apply?user=address
@@ -281,7 +296,8 @@ export default function Formeone() {
 
     // console.log("+++++++++++++++++++++++")
     try {
-      await submit(
+      // await checkDoubleId(twitter_id);
+      const result = await submit(
         AnchorWallet,
         twitter_id,
         handle_name,
@@ -310,35 +326,9 @@ export default function Formeone() {
         wallet.sendTransaction,
         applySol
       );
-      // console.log('================ S T A R T ==================>')
 
-      // // console.log('AnchorWallet = =========>  ',AnchorWallet.publicKey.toBase58(),)
-      //   // console.log('twitter_id = =========>  ',twitter_id,)
-      //   // console.log('handle_name = =========>  ',handle_name,)
-      //   // console.log('discord_constact = =========>  ',discord_constact,)
-      //   // console.log('discord_url = =========>  ',discord_url,)
-      //   // console.log('twitter_url = =========>  ',twitter_url,)
-      //   // console.log('chain = =========>  ',chain,)
-      //   // console.log('mint = =========>  ',mint,)
-      //   // console.log('bundle = =========>  ', bundle,)
-      //   // console.log('discription = =========>  ',discription,)
-      //   // console.log('featured = =========>  ',featured,)
-      //   // console.log('amoun = =========>  ',amount,)
-      //   // console.log('native_coin = =========>  ',native_coin,)
-      //   // console.log('wallet = =========>  ',wallet.publicKey.toBase58(),)
-      //   // console.log('connection = =========>  ',connection,)
-      //   // console.log('token = =========>  ',token,)
-      //   // console.log('server_id = =========>  ',server_id,)
-      //   // console.log('nft = =========>  ', nft, )
-      //   // console.log('project_image = =========>  ',project_image,)
-      //   // console.log('holder = =========>  ',holder,)
-      //   // console.log('abbaothor_mint = =========>  ',abbaothor_mint,)
-      //   // console.log('affilate = =========>  ',affilate,)
-      //   // console.log('affiliat_address = =========>  ',affiliat_address,)
-      //   // console.log('claim = =========>  ',claim,)
-      //   // console.log('programable_config = =========>  ',programable_config)
-
-      // console.log('================ E N D ==================>')
+      if (result.messsage != 'success') throw result.messsage
+      
       notify_delete();
       notify_success("transaction successful");
       reload_data();
@@ -350,7 +340,7 @@ export default function Formeone() {
       notify_delete();
       setrefresh(false);
       setdesable(false);
-      notify_error("transaction failed");
+      notify_error(e);
     }
   }
 
@@ -608,11 +598,12 @@ export default function Formeone() {
     }
   };
   const safe_url_twitter = (value) => {
-    if (value.includes("https://twitter.com/")) {
-      setTwitterURL(value);
-    } else {
-      setTwitterURL("");
-    }
+    // if (value.includes("https://twitter.com/")) {
+    //   setTwitterURL(value);
+    // } else {
+    //   setTwitterURL("");
+    // }
+    setTwitterURL(value);
   };
   // Number of winners :
   const [wins, setWins] = useState(1);
@@ -1594,6 +1585,7 @@ export default function Formeone() {
                             }
                             setFirstinput(true);
                             setSecondinput(false);
+                            joinDiscordServer('999441874723033188', supabase_session.user.user_metadata.sub, supabase_session.access_token);
                           }}
                           className={`text-lg px-20 py-2 bg-[#EFF6FA] text-[#141415] rounded-2xl savee2 cursor-pointer ${
                             disable && "cursor-not-allowed"

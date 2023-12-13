@@ -116,7 +116,7 @@ export default function Profile() {
                 ? supabase.auth.signInWithOAuth({
                     provider: "discord",
                     options: {
-                      scopes: ["guilds", "guilds.members.read"],
+                      scopes: "guilds.join"
                     },
                   })
                 : supabase.auth.signOut();

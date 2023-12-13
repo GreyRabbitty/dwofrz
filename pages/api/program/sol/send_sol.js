@@ -8,6 +8,8 @@ import { getToken } from "next-auth/jwt";
 export default async function handle(req, res) {
   
   try {
+
+    console.log('sendsol ====> ', req.body)
       
         const token = await getToken({
           req,
@@ -47,14 +49,16 @@ export default async function handle(req, res) {
 
           const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;
 
+          console.log('send_sol api here!! ====>');
 
-        const serialized = req.body.serializing;
 
-        const buffer_tx = Buffer.from(serialized, 'base64');
-        const rpc = process.env.RPC
-        const connection = new web3.Connection(rpc, {
-          confirmTransactionInitialTimeout: 2147483647
-        });
+              // const serialized = req.body.serializing;
+
+              // const buffer_tx = Buffer.from(serialized, 'base64');
+              // const rpc = process.env.RPC
+              // const connection = new web3.Connection(rpc, {
+              //   confirmTransactionInitialTimeout: 2147483647
+              // });
 
 
         // need check here if the user is in the raffle or not
@@ -72,12 +76,16 @@ export default async function handle(req, res) {
 
         const readDataJson = await readData.json();
 
+        console.log('readDataJson ===> ', readDataJson);
+
         if (readDataJson.document !== null) {
           return res.status(401).json({
             status: "ERR",
             message: "you are already in the raffle"
           })
         }
+
+        console.log('You are newbee in raffle!!');
         // check if the user is already in the raffles with the same discord
         // const readdisData = await fetch(`${baseUrl}/findOne`, {
         //   ...fetchOptions,
@@ -108,12 +116,12 @@ export default async function handle(req, res) {
 
 
 
-        const hash = await connection.sendRawTransaction(
-          buffer_tx,
-          {
-              skipPreflight: false
-          }
-      )
+                //   const hash = await connection.sendRawTransaction(
+                //     buffer_tx,
+                //     {
+                //         skipPreflight: false
+                //     }
+                // )
 
 
 
@@ -164,6 +172,7 @@ export default async function handle(req, res) {
           reword_name: req.body.reword_name,
           network: "SOL"
         }
+        console.log('send_sol raffle_info before===> ', raffle_info);
 
         fetchBody.database = "user_raffle";
         fetchBody.collection = token.sub;
@@ -175,14 +184,16 @@ export default async function handle(req, res) {
           }),
         });
 
+        console.log('send_sol raffle_info after===> ', raffle_info);
+
 
         res.status(200).json({
             status: "OK",
-            hash: hash,
+            // hash: hash,
         })
     }
     catch(e) {
-      // console.log(e)
+      console.log('send_sol error ==>', e);
         res.status(500).json({
           status: "ERR",
           message: e

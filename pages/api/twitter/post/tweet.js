@@ -27,13 +27,17 @@ export default async (req, res) => {
 
   try {
 
+    console.log('second_client ==>', second_client);
     const rest = await twitter.v2.reply(status, in_reply_to_status_id)
+
+    console.log('Comment is success ===>')
 
     return res.status(200).json({
       status: "Ok",
     });
 
   } catch (e) {
+    console.log('error in comment ===>', e);
     return res.status(500).json({
       status: "ERR",
       message: e

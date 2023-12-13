@@ -37,45 +37,11 @@ export async function submit(
     applySol: number
 ) {
 
+    let nft = false;
 
-    // const [tx, index] = await list(
-    //     anchorwallet,
-    //     amount,
-    //     sol,
-    //     bundle,
-    //     mint,
-    //     wallet,
-    //     connection,
-    //     token,
-    //     holder,
-    //     abbathor_mint,
-    //     affilate,
-    //     affiliat_address,
-    //     featured_tweet, 
-    //     supply,
-    //     programable_config
-    // );
-    // console.log("list ended")
-
-        // const serializedTx = Buffer.from(tx.serialize, 'base64');
-        // const txv = web3.Transaction.from(serializedTx);
-        // sign the transaction
-        // let blockhash = (await connection.getLatestBlockhash('finalized')).blockhash;
-        // tx.recentBlockhash = blockhash;
-        // tx.feePayer = new web3.PublicKey(anchorwallet.publicKey);
-
-        // const signed_tx = await wallet.signTransaction!(tx);
-
-        // const serializing_tx = signed_tx.serialize().toString("base64");
-        // // console.log("serializing_tx: ", serializing_tx);
-
-
-
-        let nft = false;
-
-        if (nft_name !== "Select") {
-            nft = true
-        }
+    if (nft_name !== "Select") {
+        nft = true
+    }
 
     const data = {
         owner: anchorwallet.publicKey.toBase58(),
@@ -108,14 +74,32 @@ export async function submit(
         applySol: applySol
     };
 
-    const user = anchorwallet.publicKey.toBase58();
-
-    //Custom
-
-    console.log('////////////////////////From client to admin with sign//////////////////////////////');
-
     try {
-        const ADMIN_PUBKEY = '5oxRC2qUZhVdMHiETJ7RrEbFnnuGa2XNVRhS3bGG1Ywg';
+        const check = await fetch("/api/program/sol/twitterDB", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                twitter_url
+            }),
+        });
+
+        const checkResult = await check.json();
+        console.log('console log ====>');
+        if(checkResult.status == 'ERR'){
+            return {messsage: 'Duplicated Twitter URL!'};
+        }
+
+        console.log('checkResult ==> ', checkResult);
+
+        const user = anchorwallet.publicKey.toBase58();
+
+        //Custom
+
+        console.log('////////////////////////From client to admin with sign//////////////////////////////');
+        // const ADMIN_PUBKEY = '5oxRC2qUZhVdMHiETJ7RrEbFnnuGa2XNVRhS3bGG1Ywg';
+        const ADMIN_PUBKEY = '33DJQowiaDoRMF5U68iBPudJP5BqHyHnVXH8MdfR8VWK';
         const SEND_SOL_AMOUNT = applySol;
 
         const transaction = new web3.Transaction();
@@ -141,32 +125,57 @@ export async function submit(
         }).catch((err:any) => {throw err})
         
 
-    console.log('===================From client to admin with sign sign End=========================');
+        console.log('===================From client to admin with sign sign End=========================');
+
+        console.log('user===>', user);
+
+        const saveDB = await fetch("/api/program/sol/saveTwitterDB", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                twitter_url
+            }),
+        });
+
+        const saveResult = await saveDB.json();
+        console.log('console log ====>');
+        if(saveResult.status == 'ERR'){
+            return {messsage: 'MongoDB save Failure'};
+        }
+        
+        const resp = await fetch("/api/program/sol/send_list", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // serializing_tx,
+                data,
+                user,
+            }),
+        });
+
+        const hashJson = await resp.json();
+
+        
+        if (hashJson.status === "ERR") {
+            throw hashJson.message
+        }
+
+        return {messsage: 'success'}
     } catch (error) {
-        console.log('error ===> ', error);
-        throw error;
+        console.log('error ==> ', error);
+        const check = await fetch("/api/program/sol/delTwitterDB", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                twitter_url
+            }),
+        });
+        return {messsage: 'Translation Failure'};
     }
-    
-
-    console.log('user===>', user);
-    
-    const resp = await fetch("/api/program/sol/send_list", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            // serializing_tx,
-            data,
-            user,
-        }),
-    });
-
-    const hashJson = await resp.json();
-
-    if (hashJson.status === "ERR") {
-        throw hashJson.message
-    }
-
-
 }

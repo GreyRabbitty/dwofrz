@@ -26,13 +26,8 @@ export default async (req, res) => {
     accessSecret: token.twitter.refreshToken
   })
 
-
   const twitter = second_client.readWrite;
   try {
-
-    console.log("Twitter ======> ", twitter);
-    console.log("token.sub ======> ", token.sub);
-    console.log("tweet_id ======> ", tweet_id);
     console.log('Trying to post Like to twitter')
     const result = await twitter.v2.like(token.sub ,tweet_id);
     return res.status(200).json({

@@ -28,17 +28,13 @@ export default async function handler(req, res) {
         const signData = enc.encode(`
         Message: Welcome to Ragnarok!
 
-        Click to sign in and accept the Dworfz Terms of Service: https://Dworfz.com
-    
-        This request will not trigger a blockchain transaction or cost any gas fees.
-    
-        you will delete a tweet now
+        Do you really delete?
     
         Wallet address: ${req.body.address}`
         )
 
         const signature = req.body.seg;
-        const pubkey = new web3.PublicKey("5oxRC2qUZhVdMHiETJ7RrEbFnnuGa2XNVRhS3bGG1Ywg");
+        const pubkey = new web3.PublicKey("33DJQowiaDoRMF5U68iBPudJP5BqHyHnVXH8MdfR8VWK");
 
         const result = nacl.sign.detached.verify(signData, bs58.decode(signature), pubkey.toBuffer())
 

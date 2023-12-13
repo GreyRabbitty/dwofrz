@@ -35,7 +35,7 @@ export default async (req, res) => {
     // });
 
     const twitter = second_client.readWrite
-    const rest = await twitter.v2.usersByUsernames(twitter_name)
+    const rest = await twitter.v2.usersByUsernames(twitter_name);
     await twitter.v2.follow(token.sub, rest.data[0].id)
 
     return res.status(200).json({

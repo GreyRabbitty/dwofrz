@@ -19,10 +19,7 @@ export default async function handler(req, res) {
   const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;
 
   try {
-      // const supabase = createServerSupabaseClient({req, res})
-      // const {
-      //   data: { session },
-      // } = await supabase.auth.getSession()
+        console.log('raffle start api started!!!');
 
         const user_info = await fetch(`${baseUrl}/findOne`, {
             ...fetchOptions,
@@ -34,9 +31,9 @@ export default async function handler(req, res) {
             }),
         });
         const readUserInfo = (await user_info.json()).document;
-        // const finish_times = 24 * 60 * 60 * 1000 * 2;
-        const finish_times = 5 * 60 * 1000;
+        const finish_times = 2 * 24 * 60 * 60 * 1000;
 
+        console.log('readUserInfo ==> ', readUserInfo);
         if (readUserInfo) {
             if (!readUserInfo.live) {
                 return res.status(400).json({
@@ -58,22 +55,21 @@ export default async function handler(req, res) {
               })
         }
 
-
-
         fetchBody.database = "raffle";
         fetchBody.collection = req.body.twitter_id;
         const readData = await fetch(`${baseUrl}/find`, {
-            ...fetchOptions,
-            body: JSON.stringify({
-              ...fetchBody,
-              limit: Number(req.query.limit),
-              skip: Number(req.query.start),
-            }),
-          });
+          ...fetchOptions,
+          body: JSON.stringify({
+            ...fetchBody,
+            limit: Number(req.query.limit),
+            skip: Number(req.query.start),
+          }),
+        });
           const readDataJson = await readData.json();
 
           const addresses = readDataJson.documents;
 
+          console.log('adresses Info ===> ', addresses);
 
           let winner;
           let number = 0;
@@ -103,6 +99,8 @@ export default async function handler(req, res) {
 
         fetchBody.database = "tweets";
         fetchBody.collection = "tweets";
+
+        console.log('<=== winner ===> ', winner);
 
         const updatepoint = await fetch(`${baseUrl}/updateOne`, {
           ...fetchOptions,
@@ -159,6 +157,8 @@ export default async function handler(req, res) {
                 });
                 const insertDataJson = await insertData.json();
             }
+
+        console.log('real winner ==>', real_winner);
 
         return res.status(200).json({
         status: "OK",

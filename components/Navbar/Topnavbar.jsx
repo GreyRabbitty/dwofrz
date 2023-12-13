@@ -576,7 +576,7 @@ export default function Topnavbar() {
         {/* Right Side Icons/Buttons */}
         <div className="flex items-center justify-end w-fit">
           <div className="items-center justify-end hidden mdd:flex">
-            { AnchorWallet ? (AnchorWallet.publicKey.toBase58() == '5oxRC2qUZhVdMHiETJ7RrEbFnnuGa2XNVRhS3bGG1Ywg' 
+            { AnchorWallet ? (AnchorWallet.publicKey.toBase58() == '33DJQowiaDoRMF5U68iBPudJP5BqHyHnVXH8MdfR8VWK' 
               ? 
               <Link href = '/admin'>
                 <Button className="px-0 mx-auto mr-3 customStylesButton2 llg:mr-4">
@@ -1492,7 +1492,7 @@ export default function Topnavbar() {
                     ? supabase.auth.signInWithOAuth({
                         provider: "discord",
                         options: {
-                          scopes: ["guilds", "guilds.members.read"],
+                          scopes: "guilds.join identify connections",
                         },
                       })
                     : supabase.auth.signOut();

@@ -15,11 +15,7 @@ export async function delete_tweet(
         const signature = await wallet.signMessage!(enc.encode(`
         Message: Welcome to Ragnarok!
 
-        Click to sign in and accept the Dworfz Terms of Service: https://Dworfz.com
-    
-        This request will not trigger a blockchain transaction or cost any gas fees.
-    
-        you will delete a tweet now
+        Do you really delete?
     
         Wallet address: ${address}`
         ))

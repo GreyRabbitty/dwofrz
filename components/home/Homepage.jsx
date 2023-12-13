@@ -69,8 +69,6 @@ export default function Homepage() {
     };
   }, [AnchorWallet, active]);
 
-  // const calculation = useMemo(() => tweets && get_entries && check_mark(), [get_entries, tweets]);
-
   async function check_mark(tweet_availbe, user_entries) {
     if (tweet_availbe && user_entries) {
       const arr = tweet_availbe;

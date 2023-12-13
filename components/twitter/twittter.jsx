@@ -39,6 +39,7 @@ import { get_claimer } from "../utils/claimers";
 import { DworfzHolderContext } from "../utils/dworfz_holder_context";
 import { nftContext } from "../utils/nft";
 import { instr_postTweet } from "../instraction/twitter/instraction/postTweet"
+import { send_reward } from '../instraction/raffle/reward'
 
 export default function twittter({
   twitter_session,
@@ -46,6 +47,8 @@ export default function twittter({
   twitter_name,
   data,
 }) {
+
+  const [discordVote, setDiscordVote] = useState(false);
 
 
   async function _get_followers() {
@@ -59,6 +62,7 @@ export default function twittter({
       }).then((res) => res.json());
       return results.follow
     }catch (e) {
+      console.log('follow error ==>', follow);
     }
   }
 
@@ -67,7 +71,7 @@ export default function twittter({
   const btns =
     "w-9 mr-2 lgg:w-10 2xl:w-11 h-9 cursor-pointer lgg:h-10 2xl:h-11 rounded-md lgg:rounded-xl bg-cusEL-200/60 hover:bg-cusEL-200 flex justify-center items-center";
 
-  const [replay, setreplay] = useState();
+  const [replay, setreplay] = useState('');
   const [is_follow, setIsFollow] = useState(false);
   const [is_like, setIsLike] = useState(false);
   const [is_replay, setIsReplay] = useState(false);
@@ -122,6 +126,7 @@ export default function twittter({
     const controller = new AbortController();
     const signal = controller.signal;
     if (!data) return;
+    console.log('data ===> ===> ', data);
     setLoading(true);
     get_follow();
     get_guild_counts();
@@ -169,7 +174,7 @@ export default function twittter({
     }
     const controller = new AbortController();
     const signal = controller.signal;
-    // check(signal);
+    check(signal);
     return () => {
       // cancel the request before component unmounts
       controller.abort();
@@ -296,11 +301,13 @@ export default function twittter({
     }
 
     // CHECK FOLLOW
-    if (
-      data.bundle == "follow like comment retweet join discord" ||
-      data.bundle == "Like comment retweet follow"
-    ) {
+    // if (
+    //   data.bundle == "follow like comment retweet join discord" ||
+    //   data.bundle == "Like comment retweet follow"
+    // ) {
+      console.log('<====ready to call the get followers func====>')
       if (!is_follow) {
+        console.log('<====getting followers func====>')
         const follow = await _get_followers()
         if (follow) {
           _follow = true;
@@ -312,7 +319,7 @@ export default function twittter({
       } else {
         _follow = true
       }
-      }
+      // }
 
     // CHECK THE SERVER
     _discord = await is_in_the_server();
@@ -322,6 +329,9 @@ export default function twittter({
     }
     is_claimed(_discord, _like, _replay, _retweet, _follow);
   }
+
+  //action
+
   async function follow() {
 
     if (loading_action) {
@@ -351,10 +361,11 @@ export default function twittter({
   }
 
   async function postTweet() {
-    
+
     if (loading_action) {
       return
     }
+
     setLoandingAction(true);
 
     if (participate) {
@@ -399,7 +410,7 @@ export default function twittter({
           // }).then((res) => res.json());
           const results = await instr_retweet(tweet_id);
           if (results.status == "ERR") {
-            notify_warning(results.message.errors[0].message);
+            notify_warning('Please reconnect Twitter');
             throw results.message;
           }
           setIsRetweet(true);
@@ -431,7 +442,7 @@ export default function twittter({
       // }).then((res) => res.json());
       const results = await instr_like(tweet_id);
       if (results.status == "ERR") {
-        notify_warning(results.message.errors[0].message);
+        notify_warning('Please reconnect Twitter');
         throw results.message;
       }
       setIsLike(true);
@@ -450,12 +461,15 @@ export default function twittter({
     setLoandingAction(true);
 
     if (participate) {
+      setLoandingAction(false);
       return;
     }
     if (!twitter_session) {
+      setLoandingAction(false);
       return notify_warning("connect twitter first!");
     }
     if (replay.length <= 6) {
+      setLoandingAction(false);
       return notify_warning("replay too short!");
     }
     try {
@@ -476,7 +490,8 @@ export default function twittter({
         auto_populate_reply_metadata
       );
       if (results.status == "ERR") {
-        notify_warning("error: please try again later!");
+        setLoandingAction(false);
+        notify_warning('Please reconnect Twitter');
         throw results.message;
       }
       setIsReplay(true);
@@ -542,12 +557,17 @@ export default function twittter({
   }
 
   async function is_in_the_server(signal) {
+    console.log('is_in_the _server ======> ');
     let disco = false;
     if (
       data.bundle == "like comment retweet join discord" ||
       data.bundle == "follow like comment retweet join discord"
     ) {
-      if (!session) return disco;
+      if (!session) {
+        notify_warning('Please connect to discord!')
+        return disco
+      };
+      console.log('session provider ==>', session.provider_token);
 
       try {
         const ress = await fetch(
@@ -558,6 +578,7 @@ export default function twittter({
           }
         );
         const resp = await ress.json();
+        console.log('resp ==>', resp);
         if (resp.length && resp.length > 0) {
           resp.map((guild) => {
             if (data.server_id == guild.id) {
@@ -568,7 +589,7 @@ export default function twittter({
         } else {
           if (resp.message) {
             notify_warning(
-              "you have been either rate limited or your login is expired disconnect and connect discord again!"
+              "your login is expired. disconnect and connect discord again!"
             );
           }
         }
@@ -582,6 +603,7 @@ export default function twittter({
   }
 
   async function enter_raffle() {
+    console.log('enter_raffle ==> ', enter_raffle);
     if (data.network == "solana") {
       if (!AnchorWallet) {
         notify_warning("connect your solana wallet!");
@@ -635,35 +657,35 @@ export default function twittter({
         }
 
         let dworfz_mint = null;
-        const tokens = await metaplex
-          .nfts()
-          .findAllByOwner({ owner: metaplex.identity().publicKey });
-        if (tokens) {
-          tokens.map((nft) => {
-            if (
-              nft.creators &&
-              nft.creators[0] &&
-              nft.creators[0].address &&
-              nft.creators[0].address.toBase58() ===
-                "HqTe2enoGBB1VBu6FfahXK8PrWjAXxGYMkWyZeK7nYT9"
-            )
-              dworfz_mint = nft.mintAddress.toBase58();
-          });
-        }
+                  // const tokens = await metaplex
+                  //   .nfts()
+                  //   .findAllByOwner({ owner: metaplex.identity().publicKey });
+                  // if (tokens) {
+                  //   tokens.map((nft) => {
+                  //     if (
+                  //       nft.creators &&
+                  //       nft.creators[0] &&
+                  //       nft.creators[0].address &&
+                  //       nft.creators[0].address.toBase58() ===
+                  //         "HqTe2enoGBB1VBu6FfahXK8PrWjAXxGYMkWyZeK7nYT9"
+                  //     )
+                  //       dworfz_mint = nft.mintAddress.toBase58();
+                  //   });
+                  // }
         // <<<<<<< HEAD
         //         // console.log(nfts);
         //         // console.log(dworfz_mint);
 
         //         // if (dworfz_holder) {
-                if (nfts) {
-                  nfts.map((nft) => {
-                    if (
-                      nft.creators && nft.creators[0] && nft.creators[0].address && nft.creators[0].address.toBase58() ===
-                      "HqTe2enoGBB1VBu6FfahXK8PrWjAXxGYMkWyZeK7nYT9"
-                    )
-                      dworfz_mint = nft.mintAddress.toBase58();
-                  });
-                }
+                // if (nfts) {
+                //   nfts.map((nft) => {
+                //     if (
+                //       nft.creators && nft.creators[0] && nft.creators[0].address && nft.creators[0].address.toBase58() ===
+                //       "HqTe2enoGBB1VBu6FfahXK8PrWjAXxGYMkWyZeK7nYT9"
+                //     )
+                //       dworfz_mint = nft.mintAddress.toBase58();
+                //   });
+                // }
         // =======
 
         if (dworfz_mint === null) {
@@ -671,9 +693,9 @@ export default function twittter({
           const time = data.postAt;
           const day_time = 1000 * 60 * 60 * 24 * 2 + time;
           if (current_time <= day_time) {
-            notify_warning(
-              "This wallet doesn't have any dworfz nft so it will not be aligible to the reward!"
-            );
+            // notify_warning(
+            //   "This wallet doesn't have any dworfz nft so it will not be aligible to the reward!"
+            // );
           }
           // >>>>>>> 7a86e7cbea73b8a58362e287085209de283f6e4e
         }
@@ -802,14 +824,19 @@ export default function twittter({
   // start the raffle and see the winner
   async function start_raffel(signal) {
     try {
+      console.log('start_raffle ======>')
       const win_info = await raff(
         tweet_id,
         data.name,
         signal,
         data.project_image
       );
-      if (win_info.address) {
-        // setWinner(win_info.address);
+      if (win_info) {
+        notify_success('winner is '+win_info);
+        setWinner(win_info);
+        await send_reward(winner, connection, data.amount);
+        
+        console.log('after API winner address==>', win_info);
       }
     } catch (e) {
       throw e;
@@ -842,6 +869,16 @@ export default function twittter({
     toast.dismiss();
   };
 
+  const getReward = async(win_address) => {
+    // if(winner == AnchorWallet.publicKey.toBase58()){
+    //   notify_success('Congrate! You are winner');
+    //   await send_reward(winner, connection, data.amount);
+    //   notify_success('Reward Sent!')
+    // } else {
+    //   notify_error('You are not winner!!');
+    // }
+  }
+
   const [rotate, setRotate] = useState(false);
 
   const handleRotateClick = () => {
@@ -870,16 +907,20 @@ export default function twittter({
   const [discord_counts, setDicordCounts] = useState();
 
   async function get_guild_counts() {
+    console.log('get_guild_counts is called =======> ');
+    console.log('data.discord_url ===>', data.discord_url);
     if (!data.discord_url) return;
 
     const invites = data.discord_url;
 
     let name = invites.replaceAll("https://discord.com/invite/", "");
     name = name.replaceAll("https://discord.gg/", "");
+    console.log('name===> ', name);
     const resp = await fetch(
       `https://discord.com/api/v9/invites/${name}?with_counts=true&with_expiration=false`
     );
     const resp_json = await resp.json();
+    console.log('resp_json ===> ', resp_json);
     if (resp_json) {
       setDicordCounts(resp_json.approximate_member_count);
     }
@@ -973,7 +1014,7 @@ export default function twittter({
                           />
                         </div>
                         <div className="flex flex-col items-start justify-start mx-3">
-                          <div className="rating">
+                          {/* <div className="rating">
                             <div className="flex items-center text-base md:text-2xl">
                               <div className="mr-1 text-yellow-400">
                                 <AiFillStar />
@@ -991,7 +1032,7 @@ export default function twittter({
                                 <AiFillStar />
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                           <div
                             // onClick={() => eth_point()}
                             className="hidden mt-4 text-xl font-semibold md:block"
@@ -1003,17 +1044,20 @@ export default function twittter({
                       {/* btns */}
                       <div>
                         {discord_counts && (
-                          <div
-                            // href={`${data && data.discord_url}`}
-                            // target="_blank"
+                          <Link
+                            href={`${data && data.discord_url}`}
+                            target="_blank"
                             className="discord font-semibold border-[1.9px] border-[var(--dwtwo)] dark:border-gray-800 lg:mt-5 xl:mt-0 rounded-xl cursor-pointer px-4 py-2 text-sm hover:scale-105 transition-all flex items-center"
                           >
                             <div className="mr-2 text-2xl text-fuchsia-500">
                               <FaDiscord />
                             </div>
                             <div className="mr-2">{discord_counts}</div>
-                          </div>
+                          </Link>
                         )}
+                        {/* <div className="mr-2 text-2xl text-fuchsia-500" onClick={checkInvite}>
+                          <FaDiscord />
+                        </div> */}
                         {followers && (
                           <div
                             // href={`${data && data.twitter_url}`}
@@ -1047,7 +1091,7 @@ export default function twittter({
                     </div>
                     {/* text */}
                     {/* rating */}
-                    {is_didnt_rate && (
+                    {false && (
                       <div className="flex flex-col items-center justify-center">
                         <div className="items-center mb-1 text-xl font-normal">
                           Add Your Rating:
@@ -1077,8 +1121,11 @@ export default function twittter({
                   </div> */}
                     {/* btn */}
                     <div className="flex justify-center w-full">
-                      {!live && winner && !data.native_coin && (
-                        <div className="winner dark:shadow-none dark:bg-gradient-to-t dark:from-gray-200 dark:to-gray-200 dark:border dark:border-gray-800 text-base flex itmes-center mt-6 px-6 lg:px-2 llg:px-6 fontquick py-[10px] rounded-xl">
+                      {!live && winner && data.native_coin && (
+                        <div 
+                          className="winner dark:shadow-none dark:bg-gradient-to-t dark:from-gray-200 dark:to-gray-200 dark:border dark:border-gray-800 text-base flex itmes-center mt-6 px-6 lg:px-2 llg:px-6 fontquick py-[10px] rounded-xl cursor-pointer"
+                          onClick={() => getReward(winner)}
+                        >
                           Winner: {winner.slice(0, 5)}...
                           {winner.slice(winner.length - 4, winner.length)}(
                           {data && data.network == "ETH" ? (
@@ -1215,7 +1262,8 @@ export default function twittter({
                         <div className="mt-5 mx-auto max-w-[584px] px-10 lg:px-4 flex md:flex-row sm:flex-col justify-between items-center">
                           <div className="flex items-center justify-start -mt-1">
                             {/* ///////////////////////////////////////   T_POST  ///////////////////////////////// */}
-                            {/* following */} 
+                            
+                            {/* follow */} 
                             <div 
                               onClick={() => !is_follow && follow()}
                               className={`${btns} ${
@@ -1226,76 +1274,7 @@ export default function twittter({
                             >
                               <BsTwitter />
                             </div>
-                            {method ? (
-                              (method == 3 || method == 4) && (
-                                // <Link
-                                // href="https://twitter.com/"
-                                // target="_blank"
-                                //   // onClick={() => !is_follow && follow()}
-                                //   className={`${btns} ${
-                                //     is_follow
-                                //       ? "text-[#0094FF]"
-                                //       : "text-white/40"
-                                //   }`}
-                                // >
-                                //   <BsTwitter />
-                                // </Link>
-
-                                <div 
-                                  onClick={() => follow()}
-                                  className={`${btns} ${
-                                        is_follow
-                                          ? "text-[#0094FF]"
-                                          : "text-white/40"
-                                      }`}
-                                >
-                                  <BsTwitter />
-                                </div>
-                              )
-                            ) : (
-                              <span></span>
-                            )}
-                            {/* follow */} 
-                            {method ? (
-                              (method == 3 || method == 4) && (
-                                // <Link
-                                // href="https://twitter.com/"
-                                // target="_blank"
-                                //   // onClick={() => !is_follow && follow()}
-                                //   className={`${btns} ${
-                                //     is_follow
-                                //       ? "text-[#0094FF]"
-                                //       : "text-white/40"
-                                //   }`}
-                                // >
-                                //   <BsTwitter />
-                                // </Link>
-
-                                <div 
-                                  onClick={() => !is_follow && follow()}
-                                  className={`${btns} ${
-                                        is_follow
-                                          ? "text-[#0094FF]"
-                                          : "text-white/40"
-                                      }`}
-                                >
-                                  <BsTwitter />
-                                </div>
-                              )
-                            ) : (
-                              <span></span>
-                            )}
                             {/* like */}
-                            {/* <Link
-                            href="https://twitter.com/"
-                            target="_blank"
-                              // onClick={() => !is_like && like()}
-                              className={`${btns} ${
-                                is_like ? "text-[#F91881]" : " text-white/40"
-                              }`}
-                            >
-                              <AiFillHeart />
-                            </Link> */}
                             <div 
                               className={`${btns} ${
                                 is_like ? "text-[#F91881]" : " text-white/40"
@@ -1305,18 +1284,6 @@ export default function twittter({
                               <AiFillHeart />
                             </div>
                             {/* retweet */}
-                            {/* <Link
-                              href="https://twitter.com/"
-                              target="_blank"
-                              // onClick={() => !is_retweet && retweet()}
-                              className={`${btns} ${
-                                is_retweet ? "text-[#00FF85]" : "text-white/40"
-                              }`}
-                            >
-                              <div className="rotate-90">
-                                <AiOutlineRetweet />
-                              </div>
-                            </Link> */}
                             <div 
                               className={`${btns} ${
                                 is_retweet ? "text-[#00FF85]" : "text-white/40"
@@ -1328,16 +1295,6 @@ export default function twittter({
                               </div>
                             </div>
                             {/* replay */}
-                            {/* <Link
-                            href="https://twitter.com/"
-                            target="_blank"
-                              // onClick={() => !is_replay && Tweet()}
-                              className={`${btns} ${
-                                is_replay ? "text-[#2CCCFF]" : "text-white/40"
-                              }`}
-                            >
-                              <BsFillChatFill />
-                            </Link> */}
                             <div 
                               className={`${btns} ${
                                 is_replay ? "text-[#2CCCFF]" : "text-white/40"
@@ -1349,10 +1306,27 @@ export default function twittter({
                             {method ? (
                               method >= 2 &&
                               method <= 3 && (
+                                is_discord ?
+                                <div
+                                  className={`${btns} ${
+                                    is_discord
+                                      ? "text-[#5460E6]"
+                                      : "text-white/40"
+                                  }`}
+                                >
+                                  <FaDiscord />
+                                </div> :
                                 <Link
                                   href={`${data && data.discord_url}`}
+                                  onClick={() => {
+                                    const checkDiscord = setInterval(() => {
+                                      is_in_the_server();
+                                    }, 1000)
+                                    if(is_discord) {
+                                      clearInterval(checkDiscord); 
+                                    }
+                                  }}
                                   target="_blank"
-                                  // onClick={() =>!is_replay && Tweet()}
                                   className={`${btns} ${
                                     is_discord
                                       ? "text-[#5460E6]"
@@ -1449,8 +1423,8 @@ export default function twittter({
                                       </div>
                                     )
                                   ) : data.network == "solana" &&
-                                    data.native_coin ? (
-                                    <div>{data.amount} SOL</div>
+                                    data.applySol ? (
+                                    <div>{data.applySol} SOL</div>
                                   ) : data.nft ? (
                                     <Link
                                       href={`https://magiceden.io/item-details/${data.token_address}`}
@@ -1472,7 +1446,7 @@ export default function twittter({
                               </div>
                             </div>
                             <div className="linos2"></div>
-                            {data.native_coin ? (
+                            {/* {data.native_coin ? (
                               <div className="sm:py-[12px] md:py-2 px-4 h-full text-white/80  ">
                                 <div className="flex items-center justify-between w-full ">
                                   <div className="text-xs font-semibold">
@@ -1483,7 +1457,7 @@ export default function twittter({
                                   </div>
                                 </div>
                               </div>
-                            ) : (
+                            ) : ( */}
                               <Accordion className="w-full h-full font-semibold bg-transparent text-white/80 ">
                                 <AccordionSummary
                                   className="flex justify-between w-full"
@@ -1548,7 +1522,7 @@ export default function twittter({
                                   </div>
                                 </AccordionDetails>
                               </Accordion>
-                            )}
+                             {/* )} */}
                           </div>
                         </div>
                       </div>
@@ -1570,15 +1544,15 @@ export default function twittter({
             <div className="py-5">
               {live && is_aligible && !participate && (
                 <div
-                  // onClick={() => live && !participate && enter_raffle()}
+                  onClick={() => live && !participate && enter_raffle()}
                   className="w-fit px-12 mx-auto text-black text-base text-center py-2 rounded-full cursor-pointer bg-gradient-to-t from-[#FFA800] to-[#FFDAA4] hover:scale-105 transition-all"
                 >
-                  Claim
+                  Participate
                 </div>
               )}
               {in_raffle && twitter_session && loading && (
                 <div className="w-fit px-12 mx-auto text-black text-base text-center py-2 rounded-full cursor-pointer bg-gradient-to-t from-[#FFA800] to-[#FFDAA4] dark:from-gray-200 dark:to-gray-200 dark:border dark:border-gray-800 hover:scale-105 transition-all">
-                  You Already Claim!
+                  You Already Participated!
                 </div>
               )}
             </div>

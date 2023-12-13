@@ -59,7 +59,7 @@ export default function featured({ tweets }) {
   return (
     <div>
       <div className="mt-4">
-        <div className="my-2 flex justify-start items-center">
+        <div className="flex items-center justify-start my-2">
           <CustomTitle>Featured Tweets</CustomTitle>
         </div>
 
@@ -99,9 +99,9 @@ export default function featured({ tweets }) {
                         <div
                           className={`rounded-xl lgg:rounded-3xl overflow-hidden bg-cusEL-100 border border-cusEL-200 grid grid-cols-1 md:grid-cols-2 ${styleS}`}
                         >
-                          <div className="w-full h-full flex flex-col justify-between p-4 ssm:p-6 lgg:p-7 2xl:p-8 order-2 md:order-1">
+                          <div className="flex flex-col justify-between order-2 w-full h-full p-4 ssm:p-6 lgg:p-7 2xl:p-8 md:order-1">
                             <div className="">
-                              <div className="uppercase text-3xl lgg:text-4xl 2xl:text-5xl font-bold text-white/90 flex justify-center md:justify-start items-start">
+                              <div className="flex items-start justify-center text-3xl font-bold uppercase lgg:text-4xl 2xl:text-5xl text-white/90 md:justify-start">
                                 {n.name}
                                 <div className="group text-[var(--dwselect)] ml-2 mt-1 z-10 font-normal text-2xl relative">
                                   <span className="p-2 w-[200px] text-white text-center rounded-lg absolute -top-[35px] md:right-[50%] md:translate-x-[50%] bg-gray-800 text-xs scale-0 group-hover:scale-100 duration-300 delay-200 md:origin-bottom">
@@ -110,7 +110,7 @@ export default function featured({ tweets }) {
                                   <MdVerified className="text-base lgg:text-xl" />
                                 </div>
                               </div>
-                              <div className="mt-2 lgg:mt-3 text-sm lgg:text-base 2xl:text-lg text-white/60 font-light">
+                              <div className="mt-2 text-sm font-light lgg:mt-3 lgg:text-base 2xl:text-lg text-white/60">
                                 {n.discription.slice(0, 300)}
                                 {n.discription.length > 300 && "..."}
                               </div>
@@ -162,7 +162,7 @@ export default function featured({ tweets }) {
                                           alt=""
                                         />
                                       </div>
-                                      {n.amount} SOL
+                                      {n.applySol} SOL
                                     </div>
                                   ) : n.nft ? (
                                     <Link
@@ -184,12 +184,12 @@ export default function featured({ tweets }) {
                                 </div>
                               </div>
 
-                              <div className="flex flex-col ssm:flex-row justify-between items-center mt-5">
+                              <div className="flex flex-col items-center justify-between mt-5 ssm:flex-row">
                                 <Button
                                   onClick={() =>
                                     router.push(`/${n.name}/${n.twitter_id}`)
                                   }
-                                  className="px-4 llg:px-6 capitalize customStylesButton2 lightOnHoverViolet w-full ssm:w-fit order-2 ssm:order-1"
+                                  className="order-2 w-full px-4 capitalize llg:px-6 customStylesButton2 lightOnHoverViolet ssm:w-fit ssm:order-1"
                                 >
                                   Go To Tweet
                                 </Button>
@@ -258,7 +258,7 @@ export default function featured({ tweets }) {
                             </div>
                           </div>
 
-                          <div className="w-full h-full overflow-hidden order-1 md:order-2">
+                          <div className="order-1 w-full h-full overflow-hidden md:order-2">
                             <Image
                               src={n.project_image}
                               width={1200}

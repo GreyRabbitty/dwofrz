@@ -33,7 +33,7 @@ export default async function handler(req, res) {
           });
           const supabase = createServerSupabaseClient({req, res})
 
-          console.log('supabase ===> ', supabase)
+          // console.log('supabase ===> ', supabase)
           const {
             data: { session },
           } = await supabase.auth.getSession()
