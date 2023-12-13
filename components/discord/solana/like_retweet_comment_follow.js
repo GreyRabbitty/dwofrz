@@ -85,7 +85,7 @@ const Like_retweet_comment_follow = (donne) => {
         {
           name: "Ragnarok",
           value: String(
-            "http://localhost:3000/" + donne.name + "/" + donne.twitter_id
+            "https://dworfz-raiding.vercel.app/" + donne.name + "/" + donne.twitter_id
           ),
           inline: true,
         },

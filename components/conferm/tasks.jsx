@@ -345,7 +345,7 @@ export default function tasks() {
                                 className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap"
                               >
                                 <Link
-                                  href={`http://localhost:3000/${tweet.name}/${tweet.twitter_id}`}
+                                  href={`https://dworfz-raiding.vercel.app/${tweet.name}/${tweet.twitter_id}`}
                                   target="_blank"
                                 >
                                   {tweet.name}

@@ -77,7 +77,7 @@ const Nlike_retweet_comment_follow = (data) => {
         {
           name: "Ragnarok",
           value: String(
-            "http://localhost:3000/" + data.name + "/" + data.twitter_id
+            "https://dworfz-raiding.vercel.app/" + data.name + "/" + data.twitter_id
           ),
           inline: true,
         },
